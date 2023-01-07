@@ -8,21 +8,6 @@ const signToken = (id) => {
   });
 };
 
-exports.getAllUsers = async (req, res, next) => {
-  try {
-    const userData = await User.find();
-    res.status(200).json({
-      status: "success",
-      data: userData,
-    });
-  } catch (err) {
-    res.status(401).json({
-      status: "fail",
-      message: err,
-    });
-  }
-};
-
 exports.signup = async (req, res, next) => {
   try {
     // console.log(req.body.name);
