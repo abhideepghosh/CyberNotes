@@ -79,9 +79,6 @@ exports.deleteNote = async (req, res, next) => {
 exports.deleteAllUserNote = async (userId) => {
   try {
     await Note.deleteMany({ userId });
-    res.status(201).json({
-      status: "success",
-    });
   } catch (err) {
     res.status(401).json({
       status: "fail",
