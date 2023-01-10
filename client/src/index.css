@@ -1,4 +1,15 @@
-* {
-  padding: 0;
+html,
+body {
+  font-family: "IBM Plex Sans", linkMacSystemFont, San Francisco, Roboto,
+    Helvetica Neue, Segoe UI, sans-serif;
+  text-size-adjust: 100%;
+  text-rendering: optimizeLegibility;
+  box-sizing: border-box;
   margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+.font-tommrrow {
+  font-family: "Tomorrow";
+  font-weight: 500;
 }
