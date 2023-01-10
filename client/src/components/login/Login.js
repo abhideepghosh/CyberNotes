@@ -44,7 +44,7 @@ const Login = () => {
         <div className="form__image"></div>
         <div className="editor-field editor-field__textbox">
           <div className="editor-field__label-container">
-            <label className="editor-field__label">Name</label>
+            <label className="editor-field__label">Email</label>
           </div>
 
           <div className="editor-field__container">
