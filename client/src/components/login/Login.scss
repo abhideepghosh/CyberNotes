@@ -447,7 +447,6 @@ h1 {
   display: inline-block;
   position: relative;
   height: $space-size-7 - 6;
-  margin-top: $space-size-4;
   cursor: pointer;
   &__noise {
     position: absolute;
@@ -1022,3 +1021,6 @@ hr {
 // ::-webkit-resizer {
 //   display: none;
 // }
+em {
+  line-height: 2rem;
+}

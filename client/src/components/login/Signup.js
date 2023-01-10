@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 import "./Login.scss";
 
 const Login = () => {
@@ -17,21 +16,6 @@ const Login = () => {
   };
   const passwordInput = (e) => {
     setPassword(e.target.value);
-  };
-
-  const login = async () => {
-    console.log(username, password);
-    const requestOptions = {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email: username, password: password }),
-    };
-    const response = await fetch(
-      "http://localhost:5000/v1/users/login",
-      requestOptions
-    );
-    const data = await response.json();
-    console.log(data);
   };
 
   useEffect(() => {
@@ -75,16 +59,10 @@ const Login = () => {
           <span className="editor-field__bottom "></span>
           <div className="editor-field__noise"></div>
         </div>
-        <div className="btn btn--primary" onClick={login}>
-          <div className="btn__container">Login</div>
+        <div className="btn btn--primary">
+          <div className="btn__container">Signup</div>
           <div className="btn__bottom"></div>
           <div className="btn__noise"></div>
-        </div>
-        <div>
-          Be a part of the community!{" "}
-          <Link to="/Signup">
-            <em>Register Now</em>
-          </Link>
         </div>
       </form>
       {/* <div>

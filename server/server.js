@@ -1,11 +1,15 @@
 const express = require("express");
 const dotenv = require("dotenv");
 const mongoose = require("mongoose");
+const cors = require("cors");
 const app = express();
 const port = 5000;
 // Router Imports
 const userRoutes = require("./routes/userRoutes");
 const noteRoutes = require("./routes/noteRoutes");
+
+// Allow Cross Origin Resource Sharing
+app.use(cors());
 
 // Convert All Req's Recieved To JSON
 app.use(express.json({ limit: "10kb" }));
