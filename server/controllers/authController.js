@@ -77,36 +77,32 @@ exports.protect = async (req, res, next) => {
       req.headers.authorization.startsWith("Bearer")
     ) {
       token = req.headers.authorization.split(" ")[1];
+    } else {
+      return res.status(401).json({
+        status: "fail",
+        message: "User Not Logged In",
+      });
     }
     if (!token) {
-      res.status(401).json({
+      return res.status(401).json({
         status: "fail",
         message: "Something went wrong!",
       });
-      return next();
     }
     const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
     const freshUser = await User.findById(decoded.id);
     if (!freshUser) {
-      res.status(401).json({
+      return res.status(401).json({
         status: "fail",
         message: "Something went wrong!",
       });
-      return next();
     }
     req.user = freshUser;
     next();
   } catch (err) {
-    res.status(401).json({
+    return res.status(401).json({
       status: "fail",
       message: err,
     });
-    return next();
   }
 };
-// //-----------Trial--------------//
-// exports.deleteUser = async(req,res,next) => {
-//   noteController.getAllUserNotes
-
-// }
-// //-----------Trial--------------//
