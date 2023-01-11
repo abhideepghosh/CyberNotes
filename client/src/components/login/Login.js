@@ -1,10 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import "./Login.scss";
+import UserContext from "../../context/users/userContext";
 
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const userData = useContext(UserContext);
 
   const resize = () => {
     const formImage = document.querySelector(".form__image");
@@ -19,19 +21,28 @@ const Login = () => {
     setPassword(e.target.value);
   };
 
+  const loginDetailsUpdate = (data) => {
+    userData.update({ data });
+  };
+
   const login = async () => {
-    console.log(username, password);
-    const requestOptions = {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email: username, password: password }),
-    };
-    const response = await fetch(
-      "http://localhost:5000/v1/users/login",
-      requestOptions
-    );
-    const data = await response.json();
-    console.log(data);
+    try {
+      console.log(username, password);
+      const requestOptions = {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: username, password: password }),
+      };
+      const response = await fetch(
+        "http://localhost:5000/v1/users/login",
+        requestOptions
+      );
+      const data = await response.json();
+      // console.log(data);
+      loginDetailsUpdate(data);
+    } catch (error) {
+      console.log("Incorrect Username Or Password!");
+    }
   };
 
   useEffect(() => {

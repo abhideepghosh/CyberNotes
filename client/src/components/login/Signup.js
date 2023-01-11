@@ -29,6 +29,8 @@ const Login = () => {
 
   const register = () => {
     console.log(name, email, password, confirmPassword);
+    if (password === confirmPassword) {
+    }
   };
 
   useEffect(() => {
@@ -111,7 +113,7 @@ const Login = () => {
           <div className="btn__noise"></div>
         </div>
         <div>
-          Already part of the community!
+          Already part of the community!{" "}
           <Link to="/">
             <em>Login</em>
           </Link>
