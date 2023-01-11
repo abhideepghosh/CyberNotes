@@ -5,7 +5,9 @@
 *:after {
   box-sizing: inherit;
 }
-
+.error {
+  margin-top: 64px;
+}
 .login_container {
   display: flex;
   align-items: center;

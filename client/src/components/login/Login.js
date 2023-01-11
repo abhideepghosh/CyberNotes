@@ -24,12 +24,10 @@ const Login = () => {
 
   const loginDetailsUpdate = (data) => {
     userData.update({ data });
-    console.log(userData.state);
   };
 
   const login = async () => {
     try {
-      console.log(username, password);
       const requestOptions = {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -40,10 +38,13 @@ const Login = () => {
         requestOptions
       );
       const data = await response.json();
-      loginDetailsUpdate(data);
 
       if (data.status === "success") {
+        data.token = "Bearer " + data.token;
+        loginDetailsUpdate(data);
         navigate("/home");
+      } else {
+        console.log("Invalid Email Or Password");
       }
     } catch (error) {
       console.log("Incorrect Username Or Password!");

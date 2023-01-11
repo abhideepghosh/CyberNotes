@@ -1,12 +1,24 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./Login.scss";
+import {
+  nameSchema,
+  emailSchema,
+  passwordSchema,
+} from "../../schemas/UserSchema";
+import * as yup from "yup";
 
-const Login = () => {
+const Signup = () => {
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [validName, setValidName] = useState(true);
+  const [validEmail, setValidEmail] = useState(true);
+  const [validPassword, setValidPassword] = useState(true);
+  const [validConfirmPassword, setValidConfirmPassword] = useState(true);
+  const [valid, setValid] = useState(true);
+
   const navigate = useNavigate();
 
   const resize = () => {
@@ -17,23 +29,31 @@ const Login = () => {
 
   const nameInput = (e) => {
     setName(e.target.value);
+    const isValidName = nameSchema.isValid(name);
+    setValidName(isValidName);
+    console.log("Name:" + isValidName + " " + name);
   };
   const passwordInput = (e) => {
     setPassword(e.target.value);
+    const isValidPassword = passwordSchema.isValid({ password });
+    setValidPassword(isValidPassword);
   };
   const emailInput = (e) => {
     setEmail(e.target.value);
+    const isValidEmail = emailSchema.isValid({ email });
+    setValidEmail(isValidEmail);
   };
   const confirmPasswordInput = (e) => {
     setConfirmPassword(e.target.value);
+    setValidConfirmPassword(password === confirmPassword);
   };
 
   const register = async () => {
-    console.log(name, email, password, confirmPassword);
-
+    // console.log(name, email, password, confirmPassword);
     try {
-      if (password === confirmPassword) {
-        console.log("Password Matched! Validations: True");
+      const isValidAll =
+        validName && validEmail && validPassword && validConfirmPassword;
+      if (isValidAll) {
         const requestOptions = {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -44,11 +64,10 @@ const Login = () => {
           requestOptions
         );
         const data = await response.json();
-        console.log(data);
         if (data.status === "success") navigate("/");
         else console.log("Incorrect Details");
       } else {
-        console.log("Password Did Not Match With The Confirm Password Input");
+        // console.log("Data Not Valid");
       }
     } catch (error) {
       console.log(error);
@@ -61,7 +80,7 @@ const Login = () => {
 
   return (
     <main className="login_container">
-      <form className="form" action="" method="get">
+      <form className="form" action="" method="post">
         <div className="form__image"></div>
         <div className="editor-field editor-field__textbox">
           <div className="editor-field__label-container">
@@ -79,6 +98,13 @@ const Login = () => {
           </div>
           <span className="editor-field__bottom"></span>
           <div className="editor-field__noise"></div>
+          {validName ? (
+            ""
+          ) : (
+            <div class="error">
+              <p>Name Length should be greater than 3 letters</p>
+            </div>
+          )}
         </div>
         <div className="editor-field editor-field__textbox">
           <div className="editor-field__label-container">
@@ -87,7 +113,7 @@ const Login = () => {
 
           <div className="editor-field__container">
             <input
-              id="username"
+              id="email"
               type="text"
               value={email}
               className="editor-field__input "
@@ -96,6 +122,13 @@ const Login = () => {
           </div>
           <span className="editor-field__bottom"></span>
           <div className="editor-field__noise"></div>
+          {validEmail ? (
+            ""
+          ) : (
+            <div class="error">
+              <p>Invaild Email</p>
+            </div>
+          )}
         </div>
         <div className="editor-field editor-field__textbox">
           <div className="editor-field__label-container">
@@ -112,6 +145,13 @@ const Login = () => {
           </div>
           <span className="editor-field__bottom "></span>
           <div className="editor-field__noise"></div>
+          {validPassword ? (
+            ""
+          ) : (
+            <div class="error">
+              <p>Password Required</p>
+            </div>
+          )}
         </div>
         <div className="editor-field editor-field__textbox">
           <div className="editor-field__label-container">
@@ -119,7 +159,7 @@ const Login = () => {
           </div>
           <div className="editor-field__container">
             <input
-              id="password"
+              id="confirmpassword"
               type="password"
               value={confirmPassword}
               className="editor-field__input"
@@ -128,6 +168,13 @@ const Login = () => {
           </div>
           <span className="editor-field__bottom "></span>
           <div className="editor-field__noise"></div>
+          {validConfirmPassword ? (
+            ""
+          ) : (
+            <div class="error">
+              <p>Password Doesnt match</p>
+            </div>
+          )}
         </div>
         <div className="btn btn--primary" onClick={register}>
           <div className="btn__container">Register</div>
@@ -152,4 +199,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Signup;

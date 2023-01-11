@@ -1,5 +1,4 @@
 const User = require("../models/userModel");
-// const Note = require("../models/noteModel");
 const noteController = require("./noteController");
 
 exports.deleteUser = async (req, res, next) => {
@@ -21,6 +20,7 @@ exports.deleteUser = async (req, res, next) => {
   }
 };
 
+// Comment out when deploying
 exports.getAllUsers = async (req, res, next) => {
   try {
     const userData = await User.find();

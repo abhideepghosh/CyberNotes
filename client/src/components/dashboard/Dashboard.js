@@ -1,120 +1,140 @@
+import { useContext, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import UserContext from "../../context/users/userContext";
 import "./Dashboard.css";
 const Dashboard = () => {
-  return (
-    <div className="app-skeleton">
-      <div className="app-container">
-        <div className="app-a">
-          <div className="segment-topbar">
-            <div className="segment-topbar__header">
-              <TextHeading3 className="segment-topbar__title">
-                All Notes
-              </TextHeading3>
-            </div>
-            <div className="segment-topbar__aside">
-              <div className="button-toolbar">
-                <a className="button button--primary button--size-lg">
-                  <IconFeedAdd className="button__icon" />
-                </a>
-              </div>
-            </div>
-          </div>
+  const userData = useContext(UserContext);
+  const navigate = useNavigate();
 
-          <form className="form-search" onSubmit={(e) => e.preventDefault()}>
-            <div className="form-group">
-              <div className="form-control form-control--with-addon">
-                <input name="query" placeholder="Search..." type="text" />
-                <div className="form-control__addon form-control__addon--prefix">
-                  <IconSearchSubmit />
-                </div>
-              </div>
-            </div>
-          </form>
-
-          <NavSection renderTitle={(props) => <h2 {...props}>Feeds</h2>}>
-            <ChannelNav
-              activeChannel={{ id: "userID", name: "USERNAME" }}
-              channels={FIXTURES.feed}
-            />
-          </NavSection>
-
-          <NavSection renderTitle={(props) => <h2 {...props}>Direct</h2>}>
-            <ConversationNav conversations={FIXTURES.conversation} />
-          </NavSection>
-        </div>
-        <div className="app-main">
-          <div className="channel-feed">
+  useEffect(() => {
+    // console.log(userData);
+    if (!userData.state.data) {
+      navigate("/");
+    } else {
+      // console.log(userData.state.data.data);
+      const { id } = userData.state.data.data;
+      document.querySelector(".segment-topbar__overline").textContent =
+        "NetWire_Seed: " + id;
+      // document.querySelector(".channel-link__element").textContent = name;
+    }
+  }, []);
+  if (userData.state.data)
+    return (
+      <div className="app-skeleton">
+        <div className="app-container">
+          <div className="app-a">
             <div className="segment-topbar">
               <div className="segment-topbar__header">
-                <TextOverline className="segment-topbar__overline">
-                  NetWire_Seed:
-                  d869db7fe62fb07c25a0403ecaea55031744b5fb(Placeholder for User
-                  ID)
-                </TextOverline>
-                <TextHeading4 className="segment-topbar__title">
-                  <ChannelLink name="UserName" />
-                </TextHeading4>
+                <TextHeading3 className="segment-topbar__title">
+                  All Notes
+                </TextHeading3>
               </div>
               <div className="segment-topbar__aside">
                 <div className="button-toolbar">
-                  <a className="button button--default">
-                    <IconFeedMute className="button__icon" />
-                  </a>
-                  <a className="button button--default">
-                    <IconFeedSettings className="button__icon" />
-                  </a>
-                  <a className="button button--default">
-                    <IconMenuMore className="button__icon" />
+                  <a className="button button--primary button--size-lg">
+                    <IconFeedAdd className="button__icon" />
                   </a>
                 </div>
               </div>
             </div>
-            <div className="channel-feed__body">
-              <FeedMessage message={FIXTURES.messages[0]} />
-              <FeedMessage message={FIXTURES.messages[0]} />
-            </div>
-            <div className="channel-feed__footer">
-              <form
-                className="channel-message-form"
-                action="#"
-                onSubmit={(e) => e.preventDefault()}
-              >
-                <div className="form-group">
-                  <label className="form-label" htmlFor="message">
-                    Message
-                  </label>
-                  <div className="form-control">
-                    <textarea
-                      id="message"
-                      className="form-control"
-                      name="message"
-                    ></textarea>
+
+            <form className="form-search" onSubmit={(e) => e.preventDefault()}>
+              <div className="form-group">
+                <div className="form-control form-control--with-addon">
+                  <input name="query" placeholder="Search..." type="text" />
+                  <div className="form-control__addon form-control__addon--prefix">
+                    <IconSearchSubmit />
                   </div>
                 </div>
-                <div className="form-footer">
-                  <Button size="xl" type="submit" variant="primary">
-                    Add Note
-                  </Button>
+              </div>
+            </form>
+
+            <NavSection renderTitle={(props) => <h2 {...props}>Feeds</h2>}>
+              <ChannelNav
+                activeChannel={{ id: "userID", name: "USERNAME" }}
+                channels={FIXTURES.feed}
+              />
+            </NavSection>
+
+            <NavSection renderTitle={(props) => <h2 {...props}>Direct</h2>}>
+              <ConversationNav conversations={FIXTURES.conversation} />
+            </NavSection>
+          </div>
+          <div className="app-main">
+            <div className="channel-feed">
+              <div className="segment-topbar">
+                <div className="segment-topbar__header">
+                  <TextOverline className="segment-topbar__overline">
+                    NetWire_Seed:
+                    d869db7fe62fb07c25a0403ecaea55031744b5fb(Placeholder for
+                    User ID)
+                  </TextOverline>
+                  <TextHeading4 className="segment-topbar__title">
+                    <ChannelLink name={userData.state.data.data.name} />
+                  </TextHeading4>
                 </div>
-              </form>
+                <div className="segment-topbar__aside">
+                  <div className="button-toolbar">
+                    <a className="button button--default">
+                      <IconFeedMute className="button__icon" />
+                    </a>
+                    <a className="button button--default">
+                      <IconFeedSettings className="button__icon" />
+                    </a>
+                    <a className="button button--default">
+                      <IconMenuMore className="button__icon" />
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <div className="channel-feed__body">
+                <FeedMessage message={FIXTURES.messages[0]} />
+                <FeedMessage message={FIXTURES.messages[0]} />
+              </div>
+              <div className="channel-feed__footer">
+                <form
+                  className="channel-message-form"
+                  action="#"
+                  onSubmit={(e) => e.preventDefault()}
+                >
+                  <div className="form-group">
+                    <label className="form-label" htmlFor="message">
+                      Add Quick Note
+                    </label>
+                    <div className="form-control">
+                      <textarea
+                        id="message"
+                        className="form-control"
+                        name="message"
+                      ></textarea>
+                    </div>
+                  </div>
+                  <div className="form-footer">
+                    <Button size="xl" type="submit" variant="primary">
+                      Add Note
+                    </Button>
+                  </div>
+                </form>
+              </div>
             </div>
           </div>
-        </div>
-        <div className="app-b">
-          <Pad>
-            <TextHeading3 $as="h4">About CyberNotes</TextHeading3>
-            <TextParagraph1>
-              A <em>Project</em>, inspired by the Cyberpunk Genre. This app is
-              fully functional, MERN stack application.
-            </TextParagraph1>
-            <TextParagraph1>
-              The goal is to showcase a MERN project with CRUD functionality and
-              JWT authentication with a new flavour of UI/UX Design.
-            </TextParagraph1>
-          </Pad>
+          <div className="app-b">
+            <Pad>
+              <TextHeading3 $as="h4">About CyberNotes</TextHeading3>
+              <TextParagraph1>
+                A <em>Project</em>, inspired by the Cyberpunk Genre. This app is
+                fully functional, MERN stack application.
+              </TextParagraph1>
+              <TextParagraph1>
+                The goal is to showcase a MERN project with CRUD functionality
+                and JWT authentication with a new flavour of UI/UX Design.
+              </TextParagraph1>
+            </Pad>
+          </div>
         </div>
       </div>
-    </div>
-  );
+    );
+  else navigate("/");
 };
 
 function NavSection({ children, renderTitle }) {
@@ -149,8 +169,8 @@ function FeedMessage({ message }) {
 function ChannelNav({ activeChannel = null, channels = [] }) {
   return (
     <ul className="nav">
-      {channels.map((channel) => (
-        <li className="nav__item">
+      {channels.map((channel, i) => (
+        <li className="nav__item" key={i}>
           <a
             className={`nav__link ${
               activeChannel && activeChannel.id === channel.id
@@ -170,8 +190,8 @@ function ChannelNav({ activeChannel = null, channels = [] }) {
 function ConversationNav({ activeConversation = null, conversations = [] }) {
   return (
     <ul className="nav">
-      {conversations.map((convo) => (
-        <li className="nav__item">
+      {conversations.map((convo, i) => (
+        <li className="nav__item" key={i}>
           <a
             className={`nav__link ${
               activeConversation && activeConversation.id === convo.id
