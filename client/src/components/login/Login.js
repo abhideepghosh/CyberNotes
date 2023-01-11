@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./Login.scss";
 import UserContext from "../../context/users/userContext";
 
@@ -7,6 +7,7 @@ const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const userData = useContext(UserContext);
+  const navigate = useNavigate();
 
   const resize = () => {
     const formImage = document.querySelector(".form__image");
@@ -23,6 +24,7 @@ const Login = () => {
 
   const loginDetailsUpdate = (data) => {
     userData.update({ data });
+    console.log(userData.state);
   };
 
   const login = async () => {
@@ -38,8 +40,11 @@ const Login = () => {
         requestOptions
       );
       const data = await response.json();
-      // console.log(data);
       loginDetailsUpdate(data);
+
+      if (data.status === "success") {
+        navigate("/home");
+      }
     } catch (error) {
       console.log("Incorrect Username Or Password!");
     }

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./Login.scss";
 
 const Login = () => {
@@ -7,6 +7,7 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const navigate = useNavigate();
 
   const resize = () => {
     const formImage = document.querySelector(".form__image");
@@ -27,9 +28,30 @@ const Login = () => {
     setConfirmPassword(e.target.value);
   };
 
-  const register = () => {
+  const register = async () => {
     console.log(name, email, password, confirmPassword);
-    if (password === confirmPassword) {
+
+    try {
+      if (password === confirmPassword) {
+        console.log("Password Matched! Validations: True");
+        const requestOptions = {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ name, email, password }),
+        };
+        const response = await fetch(
+          "http://localhost:5000/v1/users/signup",
+          requestOptions
+        );
+        const data = await response.json();
+        console.log(data);
+        if (data.status === "success") navigate("/");
+        else console.log("Incorrect Details");
+      } else {
+        console.log("Password Did Not Match With The Confirm Password Input");
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
 
