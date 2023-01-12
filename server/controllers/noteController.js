@@ -4,7 +4,7 @@ exports.getAllUserNotes = async (req, res, next) => {
   try {
     const userId = req.params.userId;
 
-    const userNote = await Note.find({ userId });
+    const userNote = await Note.find({ userId }).sort("-createdAt");
     res.status(200).json({
       status: "success",
       result: userNote.length,

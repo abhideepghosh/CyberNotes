@@ -15,6 +15,7 @@ const Signup = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [validName, setValidName] = useState(true);
   const [validEmail, setValidEmail] = useState(true);
+  const [validUniqueEmail, setValidUniqueEmail] = useState(true);
   const [validPassword, setValidPassword] = useState(true);
   const [validConfirmPassword, setValidConfirmPassword] = useState(true);
   const [valid, setValid] = useState(true);
@@ -29,27 +30,32 @@ const Signup = () => {
 
   const nameInput = (e) => {
     setName(e.target.value);
-    const isValidName = nameSchema.isValid(name);
-    setValidName(isValidName);
-    console.log("Name:" + isValidName + " " + name);
   };
   const passwordInput = (e) => {
     setPassword(e.target.value);
-    const isValidPassword = passwordSchema.isValid({ password });
-    setValidPassword(isValidPassword);
   };
   const emailInput = (e) => {
     setEmail(e.target.value);
-    const isValidEmail = emailSchema.isValid({ email });
-    setValidEmail(isValidEmail);
   };
   const confirmPasswordInput = (e) => {
     setConfirmPassword(e.target.value);
-    setValidConfirmPassword(password === confirmPassword);
   };
 
   const register = async () => {
     // console.log(name, email, password, confirmPassword);
+    const isValidName = await nameSchema.isValid({ name: name });
+    setValidName(isValidName);
+    const isValidEmail = await emailSchema.isValid({ email: email });
+    setValidEmail(isValidEmail);
+    const isValidPassword = await passwordSchema.isValid({
+      password: password,
+    });
+    setValidPassword(isValidPassword);
+    setValidConfirmPassword(password === confirmPassword);
+    setValidUniqueEmail(true);
+    console.log("Name:" + isValidName + " " + name);
+    console.log("Email:" + isValidEmail + " " + email);
+    console.log("Password:" + isValidPassword + " " + password);
     try {
       const isValidAll =
         validName && validEmail && validPassword && validConfirmPassword;
@@ -65,7 +71,10 @@ const Signup = () => {
         );
         const data = await response.json();
         if (data.status === "success") navigate("/");
-        else console.log("Incorrect Details");
+        else {
+          setValidUniqueEmail(false);
+          console.log(data.status);
+        }
       } else {
         // console.log("Data Not Valid");
       }
@@ -102,7 +111,11 @@ const Signup = () => {
             ""
           ) : (
             <div class="error">
-              <p>Name Length should be greater than 3 letters</p>
+              <p>
+                <em className="errorem">
+                  Name Length should be greater than 3 letters
+                </em>
+              </p>
             </div>
           )}
         </div>
@@ -126,7 +139,18 @@ const Signup = () => {
             ""
           ) : (
             <div class="error">
-              <p>Invaild Email</p>
+              <p>
+                <em className="errorem">Invaild Email</em>
+              </p>
+            </div>
+          )}
+          {validUniqueEmail ? (
+            ""
+          ) : (
+            <div class="error">
+              <p>
+                <em className="errorem">Email Already Exist</em>
+              </p>
             </div>
           )}
         </div>
@@ -149,7 +173,9 @@ const Signup = () => {
             ""
           ) : (
             <div class="error">
-              <p>Password Required</p>
+              <p>
+                <em className="errorem">Password Required</em>
+              </p>
             </div>
           )}
         </div>
@@ -172,7 +198,9 @@ const Signup = () => {
             ""
           ) : (
             <div class="error">
-              <p>Password Doesnt match</p>
+              <p>
+                <em className="errorem">Password Doesnt match</em>
+              </p>
             </div>
           )}
         </div>
@@ -184,7 +212,7 @@ const Signup = () => {
         <div>
           Already part of the community!{" "}
           <Link to="/">
-            <em>Login</em>
+            <em className="errorem">Login</em>
           </Link>
         </div>
       </form>

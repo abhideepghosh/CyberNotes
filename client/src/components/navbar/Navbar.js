@@ -1,20 +1,40 @@
-import React from "react";
+import React, { useEffect, useContext } from "react";
+import { Link, useLocation } from "react-router-dom";
+import UserContext from "../../context/users/userContext";
 
 const Navbar = () => {
+  const userData = useContext(UserContext);
+  const location = useLocation();
+  // let isAvtive = true;
+
+  useEffect(() => {
+    // if ((location.pathname = "/home" && userData.state.data !== {})) {
+    // }
+    // const handleClick = () => {
+    //   if (location.pathname === "/") {
+    //     userData.update({});
+    //     isActive = false;
+    //   }
+    // };
+  }, [location]);
+
+  // Nav Item
   function NavItem({ navItem }) {
     return (
       <li className="nav__item">
-        <a
-          className={`nav__link ${navItem.isActive ? "nav__link--active" : ""}`}
-          href="#"
+        <Link
+          className={`nav__link ${
+            location.pathname === navItem.url ? "nav__link--active" : ""
+          }`}
+          to={navItem.url}
         >
-          <span className="nav__link__element">{navItem.text}</span>
+          <span className="nav__link">{navItem.text}</span>
           {navItem.notificationCount > 0 && (
-            <span className="nav__link__element">
+            <span className="nav__link">
               <Badge>{navItem.notificationCount}</Badge>
             </span>
           )}
-        </a>
+        </Link>
       </li>
     );
   }
@@ -25,10 +45,10 @@ const Navbar = () => {
 
   const FIXTURES = {
     headerMenu: [
-      { notificationCount: 11, text: "All Notes" },
-      { isActive: true, notificationCount: 0, text: "Workspace" },
-      { notificationCount: 0, text: "Settings" },
-      { notificationCount: 0, text: "Logout" },
+      { notificationCount: 11, text: "Workspace", url: "/home/workspace" },
+      { notificationCount: 0, text: "All Notes", url: "/home" },
+      { notificationCount: 0, text: "Settings", url: "/home/settings" },
+      { notificationCount: 0, text: "Logout", url: "/" },
     ],
   };
 

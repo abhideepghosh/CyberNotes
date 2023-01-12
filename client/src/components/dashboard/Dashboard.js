@@ -7,15 +7,12 @@ const Dashboard = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // console.log(userData);
     if (!userData.state.data) {
       navigate("/");
     } else {
-      // console.log(userData.state.data.data);
       const { id } = userData.state.data.data;
       document.querySelector(".segment-topbar__overline").textContent =
         "NetWire_Seed: " + id;
-      // document.querySelector(".channel-link__element").textContent = name;
     }
   }, []);
   if (userData.state.data)

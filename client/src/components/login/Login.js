@@ -6,6 +6,7 @@ import UserContext from "../../context/users/userContext";
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [validLogin, setValidLogin] = useState(true);
   const userData = useContext(UserContext);
   const navigate = useNavigate();
 
@@ -28,6 +29,7 @@ const Login = () => {
 
   const login = async () => {
     try {
+      setValidLogin(true);
       const requestOptions = {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -44,6 +46,7 @@ const Login = () => {
         loginDetailsUpdate(data);
         navigate("/home");
       } else {
+        setValidLogin(false);
         console.log("Invalid Email Or Password");
       }
     } catch (error) {
@@ -59,6 +62,20 @@ const Login = () => {
     <main className="login_container">
       <form className="form" action="" method="get">
         <div className="form__image"></div>
+        <h1 className="cyberpunk2">
+          <em>Login</em>
+        </h1>
+        <div id="light">
+          <div id="lineh1"></div>
+          <div id="lineh2"></div>
+        </div>
+        {validLogin ? (
+          ""
+        ) : (
+          <p className="errorlogin">
+            <em className="errorem">Invalid Email or Password</em>
+          </p>
+        )}
         <div className="editor-field editor-field__textbox">
           <div className="editor-field__label-container">
             <label className="editor-field__label">Email</label>

@@ -7,6 +7,9 @@ import ErrorPage from "./components/error/ErrorPage";
 import Signup from "./components/login/Signup";
 import UserState from "./context/users/userState";
 
+import Settings from "./components/settings/Settings";
+import Workspace from "./components/workspace/Workspace";
+
 function App() {
   return (
     <div className="App">
@@ -18,6 +21,8 @@ function App() {
             <Route path="/home" element={<Dashboard />} />
             <Route path="*" element={<ErrorPage />} />
             <Route path="/signup" element={<Signup />} />
+            <Route path="/home/workspace" element={<Workspace />} />
+            <Route path="/home/settings" element={<Settings />} />
           </Routes>
         </Router>
       </UserState>
