@@ -1,21 +1,23 @@
-import React, { useEffect, useContext } from "react";
+import React, { useEffect, useContext, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import UserContext from "../../context/users/userContext";
 
 const Navbar = () => {
   const userData = useContext(UserContext);
+  const [isActive, setIsActive] = useState(false);
   const location = useLocation();
-  // let isAvtive = true;
+
+  const handleClick = () => {
+    if (location.pathname === "/") {
+      userData.update({});
+      setIsActive(false);
+    }
+  };
 
   useEffect(() => {
-    // if ((location.pathname = "/home" && userData.state.data !== {})) {
-    // }
-    // const handleClick = () => {
-    //   if (location.pathname === "/") {
-    //     userData.update({});
-    //     isActive = false;
-    //   }
-    // };
+    if (location.pathname === "/home") setIsActive(true);
+    handleClick();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location]);
 
   // Nav Item
@@ -45,7 +47,7 @@ const Navbar = () => {
 
   const FIXTURES = {
     headerMenu: [
-      { notificationCount: 11, text: "Workspace", url: "/home/workspace" },
+      { notificationCount: 0, text: "Create Note", url: "/home/workspace" },
       { notificationCount: 0, text: "All Notes", url: "/home" },
       { notificationCount: 0, text: "Settings", url: "/home/settings" },
       { notificationCount: 0, text: "Logout", url: "/" },
@@ -59,9 +61,10 @@ const Navbar = () => {
       </div>
       <nav>
         <ul className="nav">
-          {FIXTURES.headerMenu.map((navItem, navItemIndex) => (
-            <NavItem key={navItemIndex} navItem={navItem} />
-          ))}
+          {isActive &&
+            FIXTURES.headerMenu.map((navItem, navItemIndex) => (
+              <NavItem key={navItemIndex} navItem={navItem} />
+            ))}
         </ul>
       </nav>
       <div />

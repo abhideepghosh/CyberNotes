@@ -1,5 +1,9 @@
 VVIP: Comment Out GetAllUsers Routes And Functions Before Deploying
 
+1. Workspace --> Corrections
+2. react infinite scroll to be implemented
+3. Backend Pagination
+4. WorkSPACE -> React Infinite Scroll --> Backend Pagination
 
 
 
@@ -13,3 +17,14 @@ Important Fetch requestOptions Snippet:
     const response = await fetch('https://reqres.in/api/posts', requestOptions);
     const data = await response.json();
     this.setState({ postId: data.id });
+
+
+// Limit On Documents
+const result = student.find().limit(10)
+
+
+// Pagination
+const page = 1;
+const itemsPerPage = 10;
+
+const result = await student.find().skip(page * itemsPerPage).limit(itemsPerPage);

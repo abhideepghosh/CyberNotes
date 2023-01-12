@@ -121,13 +121,6 @@ const Login = () => {
           </Link>
         </div>
       </form>
-      {/* <div>
-        <h1 className="cyberpunk1 glitched">Login</h1>
-        <h2 className="cyberpunk2 glitched">Login</h2>
-        <h3 className="cyberpunk3 glitched">Login</h3>
-        <h4 className="cyberpunk4 glitched">Login</h4>
-        <hr /> 
-      </div>*/}
     </main>
   );
 };

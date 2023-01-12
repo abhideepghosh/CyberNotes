@@ -18,6 +18,25 @@ exports.getAllUserNotes = async (req, res, next) => {
   }
 };
 
+exports.getRecentNotes = async (req, res, next) => {
+  try {
+    const userId = req.params.id;
+    const recentNotes = await Note.find({ userId })
+      .sort("-createdAt")
+      .limit(10);
+    res.status(200).json({
+      status: "success",
+      result: recentNotes.length,
+      data: recentNotes,
+    });
+  } catch (err) {
+    res.status(401).json({
+      status: "fail",
+      message: err,
+    });
+  }
+};
+
 exports.createNote = async (req, res, next) => {
   try {
     const newNote = await Note.create({
@@ -40,8 +59,6 @@ exports.createNote = async (req, res, next) => {
 };
 exports.updateNote = async (req, res, next) => {
   try {
-    // const noteId = req.params.id;
-    // const updateNote = await Note.find({ userId });
     req.body.createdAt = Date.now();
     const updateNote = await Note.findByIdAndUpdate(req.params.id, req.body, {
       new: true,

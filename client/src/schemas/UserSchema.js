@@ -7,5 +7,5 @@ export const emailSchema = yup.object().shape({
   email: yup.string().email("Please enter a valid email").required("Required"),
 });
 export const passwordSchema = yup.object().shape({
-  password: yup.string().min(4).required("Required"),
+  password: yup.string().min(8).required("Required"),
 });

@@ -1,20 +1,45 @@
-import { useContext, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState, useContext, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import UserContext from "../../context/users/userContext";
 import "./Dashboard.css";
 const Dashboard = () => {
   const userData = useContext(UserContext);
   const navigate = useNavigate();
+  const [recentNotes, setRecentNotes] = useState([]);
 
   useEffect(() => {
     if (!userData.state.data) {
       navigate("/");
     } else {
-      const { id } = userData.state.data.data;
+      const { id, name } = userData.state.data.data;
+      const { token } = userData.state.data;
+
       document.querySelector(".segment-topbar__overline").textContent =
         "NetWire_Seed: " + id;
+      document.querySelector(".channel-link__icon").textContent = "# " + name;
+
+      const getRecentNotes = async (id, token) => {
+        const requestOptions = {
+          method: "GET",
+          headers: new Headers({
+            // prettier-ignore
+            "Authorization": token,
+            "Content-Type": "application/json",
+          }),
+        };
+        const response = await fetch(
+          `http://localhost:5000/v1/notes/recentNotes/${id}`,
+          requestOptions
+        );
+        const data = await response.json();
+        console.log(data.data);
+        setRecentNotes(data.data);
+      };
+      getRecentNotes(id, token);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
   if (userData.state.data)
     return (
       <div className="app-skeleton">
@@ -28,9 +53,9 @@ const Dashboard = () => {
               </div>
               <div className="segment-topbar__aside">
                 <div className="button-toolbar">
-                  <a className="button button--primary button--size-lg">
+                  <Link className="button button--primary button--size-lg">
                     <IconFeedAdd className="button__icon" />
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>
@@ -46,15 +71,16 @@ const Dashboard = () => {
               </div>
             </form>
 
-            <NavSection renderTitle={(props) => <h2 {...props}>Feeds</h2>}>
-              <ChannelNav
-                activeChannel={{ id: "userID", name: "USERNAME" }}
-                channels={FIXTURES.feed}
-              />
-            </NavSection>
-
             <NavSection renderTitle={(props) => <h2 {...props}>Direct</h2>}>
               <ConversationNav conversations={FIXTURES.conversation} />
+            </NavSection>
+            <NavSection
+              renderTitle={(props) => <h2 {...props}>Recent Notes</h2>}
+            >
+              <ChannelNav
+                activeChannel={{ id: "userID", name: "USERNAME" }}
+                channels={recentNotes}
+              />
             </NavSection>
           </div>
           <div className="app-main">
@@ -72,15 +98,15 @@ const Dashboard = () => {
                 </div>
                 <div className="segment-topbar__aside">
                   <div className="button-toolbar">
-                    <a className="button button--default">
+                    <Link className="button button--default">
                       <IconFeedMute className="button__icon" />
-                    </a>
-                    <a className="button button--default">
+                    </Link>
+                    <Link className="button button--default">
                       <IconFeedSettings className="button__icon" />
-                    </a>
-                    <a className="button button--default">
+                    </Link>
+                    <Link className="button button--default">
                       <IconMenuMore className="button__icon" />
-                    </a>
+                    </Link>
                   </div>
                 </div>
               </div>
@@ -168,16 +194,16 @@ function ChannelNav({ activeChannel = null, channels = [] }) {
     <ul className="nav">
       {channels.map((channel, i) => (
         <li className="nav__item" key={i}>
-          <a
+          <Link
             className={`nav__link ${
-              activeChannel && activeChannel.id === channel.id
+              activeChannel && activeChannel.id === channel._id
                 ? "nav__link--active"
                 : ""
             }`}
-            href="#"
+            onClick={() => console.log(channel)}
           >
-            <ChannelLink {...channel}>{channel.name}</ChannelLink>
-          </a>
+            <ChannelLink {...channel}>{channel.title}</ChannelLink>
+          </Link>
         </li>
       ))}
     </ul>
@@ -189,23 +215,23 @@ function ConversationNav({ activeConversation = null, conversations = [] }) {
     <ul className="nav">
       {conversations.map((convo, i) => (
         <li className="nav__item" key={i}>
-          <a
+          <Link
             className={`nav__link ${
               activeConversation && activeConversation.id === convo.id
                 ? "nav__link--active"
                 : ""
             }`}
-            href="#"
+            to="/"
           >
             <ConversationLink conversation={convo} />
-          </a>
+          </Link>
         </li>
       ))}
     </ul>
   );
 }
 
-function ChannelLink({ icon, name, unread }) {
+function ChannelLink({ icon, title, unread }) {
   return (
     <span
       className={`channel-link ${
@@ -213,7 +239,7 @@ function ChannelLink({ icon, name, unread }) {
       }`}
     >
       <span className="channel-link__icon">#</span>
-      <span className="channel-link__element">{name}</span>
+      <span className="channel-link__element">{title}</span>
 
       {unread > 0 && (
         <span className="channel-link__element">
@@ -278,23 +304,23 @@ function Pad({ children, renderCap = null }) {
   );
 }
 
-function NavItem({ navItem }) {
-  return (
-    <li className="nav__item">
-      <a
-        className={`nav__link ${navItem.isActive ? "nav__link--active" : ""}`}
-        href="#"
-      >
-        <span className="nav__link__element">{navItem.text}</span>
-        {navItem.notificationCount > 0 && (
-          <span className="nav__link__element">
-            <Badge>{navItem.notificationCount}</Badge>
-          </span>
-        )}
-      </a>
-    </li>
-  );
-}
+// function NavItem({ navItem }) {
+//   return (
+//     <li className="nav__item">
+//       <a
+//         className={`nav__link ${navItem.isActive ? "nav__link--active" : ""}`}
+//         href="#"
+//       >
+//         <span className="nav__link__element">{navItem.text}</span>
+//         {navItem.notificationCount > 0 && (
+//           <span className="nav__link__element">
+//             <Badge>{navItem.notificationCount}</Badge>
+//           </span>
+//         )}
+//       </a>
+//     </li>
+//   );
+// }
 
 function MakeTextBase(classNameDefault, $asDefault) {
   return ({ $as = null, children, className }) => {
@@ -308,12 +334,12 @@ function MakeTextBase(classNameDefault, $asDefault) {
   };
 }
 
-const TextHeading1 = MakeTextBase("text-heading1", "h1");
-const TextHeading2 = MakeTextBase("text-heading2", "h2");
+// const TextHeading1 = MakeTextBase("text-heading1", "h1");
+// const TextHeading2 = MakeTextBase("text-heading2", "h2");
 const TextHeading3 = MakeTextBase("text-heading3", "h3");
 const TextHeading4 = MakeTextBase("text-heading4", "h4");
-const TextHeading5 = MakeTextBase("text-heading5", "h5");
-const TextHeading6 = MakeTextBase("text-heading6", "h6");
+// const TextHeading5 = MakeTextBase("text-heading5", "h5");
+// const TextHeading6 = MakeTextBase("text-heading6", "h6");
 const TextParagraph1 = MakeTextBase("text-paragraph1", "p");
 const TextOverline = MakeTextBase("segment-topbar__overline", "span");
 
@@ -349,9 +375,9 @@ const IconSearchSubmit = MakeIcon(
   <path d="M21.172 24l-7.387-7.387c-1.388.874-3.024 1.387-4.785 1.387-4.971 0-9-4.029-9-9s4.029-9 9-9 9 4.029 9 9c0 1.761-.514 3.398-1.387 4.785l7.387 7.387-2.828 2.828zm-12.172-8c3.859 0 7-3.14 7-7s-3.141-7-7-7-7 3.14-7 7 3.141 7 7 7z" />
 );
 
-const IconShop = MakeIcon(
-  <path d="M16.53 7l-.564 2h-15.127l-.839-2h16.53zm-14.013 6h12.319l.564-2h-13.722l.839 2zm5.983 5c-.828 0-1.5.672-1.5 1.5 0 .829.672 1.5 1.5 1.5s1.5-.671 1.5-1.5c0-.828-.672-1.5-1.5-1.5zm11.305-15l-3.432 12h-13.017l.839 2h13.659l3.474-12h1.929l.743-2h-4.195zm-6.305 15c-.828 0-1.5.671-1.5 1.5s.672 1.5 1.5 1.5 1.5-.671 1.5-1.5c0-.828-.672-1.5-1.5-1.5z" />
-);
+// const IconShop = MakeIcon(
+//   <path d="M16.53 7l-.564 2h-15.127l-.839-2h16.53zm-14.013 6h12.319l.564-2h-13.722l.839 2zm5.983 5c-.828 0-1.5.672-1.5 1.5 0 .829.672 1.5 1.5 1.5s1.5-.671 1.5-1.5c0-.828-.672-1.5-1.5-1.5zm11.305-15l-3.432 12h-13.017l.839 2h13.659l3.474-12h1.929l.743-2h-4.195zm-6.305 15c-.828 0-1.5.671-1.5 1.5s.672 1.5 1.5 1.5 1.5-.671 1.5-1.5c0-.828-.672-1.5-1.5-1.5z" />
+// );
 
 const FIXTURES = {
   headerMenu: [
@@ -361,24 +387,12 @@ const FIXTURES = {
     { notificationCount: 0, text: "Map" },
     { notificationCount: 0, text: "Files" },
   ],
-  feed: [
-    { id: "5ba5", name: "Afterlife", unread: 3 },
-    { id: "4f22", name: "NCPD-Gigs" },
-    { id: "fee9", name: "Pacifica" },
-    { id: "a0cc", name: "Watson" },
-    { id: "dee3", name: "_T_SQUAD", isPrivate: true, unread: 2 },
-  ],
   conversation: [
     {
       id: "cc23",
       isOnline: true,
-      unread: 5,
-      name: "Rogue Amendiares",
+      name: "Search For Notes...",
     },
-    { id: "95b4", isOnline: true, name: "Takemura", unread: 1 },
-    { id: "10cf", name: "Wakado O., Regina Jones" },
-    { id: "e466", name: "Dexter DeShawn" },
-    { id: "ca0b", name: "Megabuilding H10 Administration" },
   ],
   messages: [
     {

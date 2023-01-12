@@ -1,0 +1,400 @@
+.workspace_body {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+.workspace_form__image {
+  position: absolute;
+  animation: none;
+  opacity: 1;
+  border: 1px solid red;
+  top: 0;
+  left: 0;
+  background: linear-gradient(rgba(1, 0, 83, 0.6), rgba(#d00a0a, 0.6));
+  background-position: center;
+  background-size: cover;
+}
+.workspace_form-animation {
+  margin-top: 0px;
+  display: grid;
+  grid-gap: 36px;
+  align-items: center;
+  justify-content: center;
+  max-width: 90%;
+  width: 100%;
+  height: 80vw;
+  padding: 30px 0;
+  overflow: hidden;
+  clip-path: polygon(0 20px, 20px 0, 20px 0, 20px 0, 0 20px, 0 20px);
+  animation: form-open 1s cubic-bezier(0.4, 0, 0.2, 1) forwards 0.5s;
+
+  > * {
+    position: relative;
+    opacity: 0;
+    animation: fade-in 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  }
+
+  > *:nth-child(2) {
+    animation-delay: 1.2s;
+  }
+
+  > *:nth-child(3) {
+    animation-delay: 1.3s;
+  }
+
+  > *:nth-child(4) {
+    animation-delay: 1.4s;
+  }
+
+  > *:nth-child(5) {
+    animation-delay: 1.5s;
+  }
+
+  > *:nth-child(6) {
+    animation-delay: 1.6s;
+  }
+}
+.workspace_notes-area {
+  width: 80vw;
+  // height: 80vw;
+}
+.workspace_form-label-title {
+  background-color: var(--colors-primary--600);
+  color: var(--colors-on_primary--500);
+  font-family: var(--fonts-secondary);
+  font-size: 20px;
+  display: inline-block;
+  padding: 0.125em 0.75em;
+  padding-right: 2em;
+  letter-spacing: 0.065em;
+  line-height: 1;
+  text-transform: uppercase;
+  vertical-align: bottom; /* inline-block fix */
+  clip-path: polygon(
+    0.25em 0,
+    calc(100% - 1em) 0,
+    100% 100%,
+    0.33em 100%,
+    0 100%,
+    0 0.25em
+  );
+}
+.workspace_form-note {
+  width: 90wv;
+}
+.workspace_form-footer {
+  text-align: center;
+}
+
+.workspace_form-label-note {
+  background-color: var(--colors-primary--600);
+  color: var(--colors-on_primary--500);
+  font-family: var(--fonts-secondary);
+  font-size: 15px;
+  display: inline-block;
+  padding: 0.125em 0.75em;
+  padding-right: 2em;
+  letter-spacing: 0.065em;
+  line-height: 1;
+  text-transform: uppercase;
+  vertical-align: bottom; /* inline-block fix */
+  clip-path: polygon(
+    0.25em 0,
+    calc(100% - 1em) 0,
+    100% 100%,
+    0.33em 100%,
+    0 100%,
+    0 0.25em
+  );
+}
+.workspace_form-control-title {
+  background-color: var(--colors-bg--300);
+  border: 1px solid var(--colors-primary--600);
+  clip-path: var(--ui-notch-path);
+  padding-right: 0.5rem;
+}
+
+.workspace_form-control-title::before {
+  background-color: var(--colors-primary--600);
+  bottom: 5px;
+  content: "";
+  display: block;
+  height: 3px; /* bigger to compensate transform */
+  position: absolute;
+  right: -6px;
+  top: auto;
+  transform: rotate(-45deg);
+  // width: var(--ui-notch-hypotenuse);
+  z-index: 100;
+}
+
+.workspace_form-control-title input,
+.workspace_form-control-title textarea {
+  background-color: transparent;
+  border: 0;
+  box-shadow: none;
+  color: var(--colors-primary--500);
+  font-family: var(--fonts-primary);
+  font-size: 1rem;
+  letter-spacing: 0.045em;
+  outline: none;
+  padding: 0.5rem;
+  resize: none;
+  // width: 100%;
+}
+
+.workspace_form-control-title--with-addon {
+  align-items: center;
+  display: flex;
+}
+
+.workspace_form-control-title--with-addon .button,
+.workspace_form-control-title--with-addon .button:hover {
+  background-color: transparent;
+  border-color: transparent;
+}
+
+.workspace_form-control-title__addon {
+  display: inline-block;
+  padding: 0.45rem;
+}
+
+.workspace_form-control-title__addon svg {
+  display: block;
+  fill: currentcolor;
+  height: 1.125rem;
+  opacity: 0.66;
+  // width: 1.125rem;
+}
+
+.workspace_form-control-title__addon--prefix {
+  order: -1;
+}
+
+.workspace_form-control-title__addon--suffix {
+  order: 1;
+}
+
+.workspace_form-control-note {
+  background-color: var(--colors-bg--300);
+  border: 1px solid var(--colors-primary--600);
+  clip-path: var(--ui-notch-path);
+  padding-right: 0.5rem;
+}
+
+.workspace_form-control-note::before {
+  background-color: var(--colors-primary--600);
+  bottom: 5px;
+  content: "";
+  display: block;
+  height: 3px; /* bigger to compensate transform */
+  position: absolute;
+  right: -6px;
+  top: auto;
+  transform: rotate(-45deg);
+  // width: var(--ui-notch-hypotenuse);
+  z-index: 100;
+}
+
+.workspace_form-control-note input,
+.workspace_form-control-note textarea {
+  background-color: transparent;
+  border: 0;
+  box-shadow: none;
+  color: var(--colors-primary--500);
+  font-family: var(--fonts-primary);
+  font-size: 1rem;
+  letter-spacing: 0.045em;
+  outline: none;
+  padding: 0.5rem;
+  resize: none;
+  height: 380px;
+  // width: 100%;
+}
+
+.workspace_form-control-note--with-addon {
+  align-items: center;
+  display: flex;
+}
+
+.workspace_form-control-note--with-addon .button,
+.workspace_form-control-note--with-addon .button:hover {
+  background-color: transparent;
+  border-color: transparent;
+}
+
+.workspace_form-control-note__addon {
+  display: inline-block;
+  padding: 0.45rem;
+}
+
+.workspace_form-control-note__addon svg {
+  display: block;
+  fill: currentcolor;
+  height: 1.125rem;
+  opacity: 0.66;
+  // width: 1.125rem;
+}
+
+.workspace_form-control-note__addon--prefix {
+  order: -1;
+}
+
+.workspace_form-control-note__addon--suffix {
+  order: 1;
+}
+
+.workspace_channel-feed__footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  height: 50vh;
+}
+.workspace_channel-message-form {
+  padding-bottom: 1rem;
+}
+.workspace_channel-message-form .workspace_form-group {
+  flex: 1;
+}
+/* workspace_ */
+.workspace_form-label {
+  background-color: var(--colors-primary--600);
+  color: var(--colors-on_primary--500);
+  font-family: var(--fonts-secondary);
+  font-size: 0.92rem;
+  display: inline-block;
+  padding: 0.125em 0.75em;
+  padding-right: 2em;
+  letter-spacing: 0.065em;
+  line-height: 1;
+  text-transform: uppercase;
+  vertical-align: bottom; /* inline-block fix */
+  clip-path: polygon(
+    0.25em 0,
+    calc(100% - 1em) 0,
+    100% 100%,
+    0.33em 100%,
+    0 100%,
+    0 0.25em
+  );
+}
+.workspace_form-control {
+  background-color: var(--colors-bg--300);
+  border: 1px solid var(--colors-primary--600);
+  clip-path: var(--ui-notch-path);
+  padding-right: 0.5rem;
+}
+
+.workspace_form-control::before {
+  background-color: var(--colors-primary--600);
+  bottom: 5px;
+  content: "";
+  display: block;
+  height: 3px; /* bigger to compensate transform */
+  position: absolute;
+  right: -6px;
+  top: auto;
+  transform: rotate(-45deg);
+  width: var(--ui-notch-hypotenuse);
+  z-index: 100;
+}
+
+.workspace_form-control input,
+.workspace_form-control textarea {
+  background-color: transparent;
+  border: 0;
+  box-shadow: none;
+  color: var(--colors-primary--500);
+  font-family: var(--fonts-primary);
+  font-size: 1rem;
+  letter-spacing: 0.045em;
+  outline: none;
+  padding: 0.5rem;
+  resize: none;
+  width: 100%;
+}
+
+.workspace_form-control--with-addon {
+  align-items: center;
+  display: flex;
+}
+
+.workspace_form-control--with-addon .button,
+.workspace_form-control--with-addon .button:hover {
+  background-color: transparent;
+  border-color: transparent;
+}
+
+.workspace_form-control__addon {
+  display: inline-block;
+  padding: 0.45rem;
+}
+
+.workspace_form-control__addon svg {
+  display: block;
+  fill: currentcolor;
+  height: 1.125rem;
+  opacity: 0.66;
+  width: 1.125rem;
+}
+
+.workspace_form-control__addon--prefix {
+  order: -1;
+}
+
+.workspace_form-control__addon--suffix {
+  order: 1;
+}
+.workspace_form {
+  display: grid;
+  grid-gap: 36px;
+  align-items: center;
+  justify-content: center;
+  max-width: 400px;
+  width: 100%;
+  padding: 30px;
+  overflow: hidden;
+  clip-path: polygon(0 20px, 20px 0, 20px 0, 20px 0, 0 20px, 0 20px);
+  animation: form-open 1s cubic-bezier(0.4, 0, 0.2, 1) forwards 0.5s;
+
+  > * {
+    position: relative;
+    opacity: 0;
+    animation: fade-in 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  }
+
+  > *:nth-child(2) {
+    animation-delay: 1.2s;
+  }
+
+  > *:nth-child(3) {
+    animation-delay: 1.3s;
+  }
+
+  > *:nth-child(4) {
+    animation-delay: 1.4s;
+  }
+
+  > *:nth-child(5) {
+    animation-delay: 1.5s;
+  }
+
+  > *:nth-child(6) {
+    animation-delay: 1.6s;
+  }
+}
+.workspace_form__image {
+  position: absolute;
+  animation: none;
+  opacity: 1;
+  border: 1px solid red;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(rgba(1, 0, 83, 0.6), rgba(#d00a0a, 0.6));
+  background-position: center;
+  background-size: cover;
+}

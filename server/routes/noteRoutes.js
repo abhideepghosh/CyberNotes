@@ -20,5 +20,11 @@ router.delete(
   noteController.deleteNote
 );
 
+router.get(
+  "/recentNotes/:id",
+  authController.protect,
+  noteController.getRecentNotes
+);
+
 // router.delete("/deleteAllUserNotes/:userId",noteController.deleteAllUserNote);
 module.exports = router;
