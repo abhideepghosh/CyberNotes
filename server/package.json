@@ -4,8 +4,7 @@
   "description": "Cyber notes is a secure cloud notebook for hackers!",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon server.js",
-    "prod": "node server.js"
+    "start": "nodemon server.js"
   },
   "author": "Abhideep And Swati",
   "license": "ISC",
