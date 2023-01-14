@@ -1,6 +1,7 @@
 import { useState, useContext, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import UserContext from "../../context/users/userContext";
+
 import "./Dashboard.css";
 const Dashboard = () => {
   const userData = useContext(UserContext);
@@ -8,6 +9,7 @@ const Dashboard = () => {
   const [recentNotes, setRecentNotes] = useState([]);
   const [allNotes, setAllNotes] = useState([]);
   const [filterNotes, setFilterNotes] = useState([]);
+  let timer;
 
   useEffect(() => {
     if (!userData.state.data) {
@@ -53,6 +55,7 @@ const Dashboard = () => {
         );
         const data = await response.json();
         setAllNotes(data);
+        setFilterNotes(data.data);
       };
       getAllNotes(id, token);
     }
@@ -60,8 +63,21 @@ const Dashboard = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const filterSearch = () => {
-    console.log(allNotes);
+  // Debounce Function
+  const filterSearch = (e) => {
+    if (timer) clearTimeout(timer);
+    timer = setTimeout(() => {
+      const arr = allNotes.data.filter((element) =>
+        element.title.toLowerCase().includes(e.target.value.toLowerCase())
+      );
+      setFilterNotes(arr);
+    }, 1000);
+  };
+
+  const deleteNote = (e) => {
+    console.log(userData.state.data.data.id, userData.state.data.token);
+    console.log(e);
+    // http://localhost:5000/v1/notes/delete/63b8f0d1b7a13a20e88c1a00/63b904f8b30bc93788652fd8
   };
 
   if (userData.state.data)
@@ -95,9 +111,6 @@ const Dashboard = () => {
               </div>
             </form>
 
-            <NavSection renderTitle={(props) => <h2 {...props}>Direct</h2>}>
-              <ConversationNav conversations={FIXTURES.conversation} />
-            </NavSection>
             <NavSection
               renderTitle={(props) => <h2 {...props}>Recent Notes</h2>}
             >
@@ -113,11 +126,9 @@ const Dashboard = () => {
                 <div className="segment-topbar__header">
                   <TextOverline className="segment-topbar__overline">
                     NetWire_Seed:
-                    d869db7fe62fb07c25a0403ecaea55031744b5fb(Placeholder for
-                    User ID)
                   </TextOverline>
                   <TextHeading4 className="segment-topbar__title">
-                    <ChannelLink name={userData.state.data.data.name} />
+                    <ChannelLink name="NETRUNNER" />
                   </TextHeading4>
                 </div>
                 <div className="segment-topbar__aside">
@@ -136,47 +147,32 @@ const Dashboard = () => {
               </div>
               <div className="channel-feed__body">
                 {allNotes.data &&
-                  allNotes.data.map((note) => (
-                    <div className="message">
-                      <div className="message__body">
-                        <div>{note.title}</div>
+                  filterNotes.map((note, index) => (
+                    <div className="message-container" key={index}>
+                      <div className="message-nav">
+                        <button className="updateIcon">
+                          <em>#Update</em>
+                        </button>
+                        <button className="deleteIcon" onClick={deleteNote}>
+                          <em>#Delete</em>
+                        </button>
                       </div>
-                      <div className="message__body">
-                        <div>{note.description}</div>
-                      </div>
-                      <div className="message__footer">
-                        <span className="message__authoring">
-                          <em>#_ID: {note._id.slice(-4)}</em>
-                        </span>{" "}
-                        #CREATED_AT: {note.createdAt}
+                      <div className="message">
+                        <div className="message__body">
+                          <div>{note.title}</div>
+                        </div>
+                        <div className="message__body">
+                          <div>{note.description}</div>
+                        </div>
+                        <div className="message__footer">
+                          <span className="message__authoring">
+                            <em>#_ID: {note._id.slice(-4)}</em>
+                          </span>{" "}
+                          #CREATED_AT: {note.createdAt}
+                        </div>
                       </div>
                     </div>
                   ))}
-              </div>
-              <div className="channel-feed__footer">
-                <form
-                  className="channel-message-form"
-                  action="#"
-                  onSubmit={(e) => e.preventDefault()}
-                >
-                  <div className="form-group">
-                    <label className="form-label" htmlFor="message">
-                      Add Quick Note
-                    </label>
-                    <div className="form-control">
-                      <textarea
-                        id="message"
-                        className="form-control"
-                        name="message"
-                      ></textarea>
-                    </div>
-                  </div>
-                  <div className="form-footer">
-                    <Button size="xl" type="submit" variant="primary">
-                      Add Note
-                    </Button>
-                  </div>
-                </form>
               </div>
             </div>
           </div>
@@ -231,27 +227,6 @@ function ChannelNav({ activeChannel = null, channels = [] }) {
   );
 }
 
-function ConversationNav({ activeConversation = null, conversations = [] }) {
-  return (
-    <ul className="nav">
-      {conversations.map((convo, i) => (
-        <li className="nav__item" key={i}>
-          <Link
-            className={`nav__link ${
-              activeConversation && activeConversation.id === convo.id
-                ? "nav__link--active"
-                : ""
-            }`}
-            to="/"
-          >
-            <ConversationLink conversation={convo} />
-          </Link>
-        </li>
-      ))}
-    </ul>
-  );
-}
-
 function ChannelLink({ icon, title, unread }) {
   return (
     <span
@@ -271,50 +246,8 @@ function ChannelLink({ icon, title, unread }) {
   );
 }
 
-function ConversationLink({ conversation }) {
-  return (
-    <span
-      className={`conversation-link ${
-        conversation.isOnline ? "conversation-link--online" : ""
-      } ${conversation.unread > 0 ? "conversation-link--unread" : ""}`}
-    >
-      {conversation.members && conversation.members.length > 2 ? (
-        <span className="conversation-link__icon" />
-      ) : (
-        <span className="conversation-link__icon" />
-      )}
-
-      <span className="conversation-link__element">{conversation.name}</span>
-
-      {conversation.unread > 0 && (
-        <span className="conversation-link__element">
-          <Badge>{conversation.unread}</Badge>
-        </span>
-      )}
-    </span>
-  );
-}
-
 function Badge({ children }) {
   return <span className="badge">{children}</span>;
-}
-
-function Button({
-  children,
-  type = "button",
-  size = "default",
-  variant = "default",
-}) {
-  return (
-    <button
-      className={`button ${variant ? `button--${variant}` : ""} ${
-        size ? `button--size-${size}` : ""
-      }`}
-      type={type}
-    >
-      <span className="button__content">{children}</span>
-    </button>
-  );
 }
 
 function Pad({ children, renderCap = null }) {
@@ -324,24 +257,6 @@ function Pad({ children, renderCap = null }) {
     </div>
   );
 }
-
-// function NavItem({ navItem }) {
-//   return (
-//     <li className="nav__item">
-//       <a
-//         className={`nav__link ${navItem.isActive ? "nav__link--active" : ""}`}
-//         href="#"
-//       >
-//         <span className="nav__link__element">{navItem.text}</span>
-//         {navItem.notificationCount > 0 && (
-//           <span className="nav__link__element">
-//             <Badge>{navItem.notificationCount}</Badge>
-//           </span>
-//         )}
-//       </a>
-//     </li>
-//   );
-// }
 
 function MakeTextBase(classNameDefault, $asDefault) {
   return ({ $as = null, children, className }) => {
@@ -355,12 +270,9 @@ function MakeTextBase(classNameDefault, $asDefault) {
   };
 }
 
-// const TextHeading1 = MakeTextBase("text-heading1", "h1");
-// const TextHeading2 = MakeTextBase("text-heading2", "h2");
 const TextHeading3 = MakeTextBase("text-heading3", "h3");
 const TextHeading4 = MakeTextBase("text-heading4", "h4");
-// const TextHeading5 = MakeTextBase("text-heading5", "h5");
-// const TextHeading6 = MakeTextBase("text-heading6", "h6");
+
 const TextParagraph1 = MakeTextBase("text-paragraph1", "p");
 const TextOverline = MakeTextBase("segment-topbar__overline", "span");
 
@@ -395,38 +307,5 @@ const IconFeedAdd = MakeIcon(
 const IconSearchSubmit = MakeIcon(
   <path d="M21.172 24l-7.387-7.387c-1.388.874-3.024 1.387-4.785 1.387-4.971 0-9-4.029-9-9s4.029-9 9-9 9 4.029 9 9c0 1.761-.514 3.398-1.387 4.785l7.387 7.387-2.828 2.828zm-12.172-8c3.859 0 7-3.14 7-7s-3.141-7-7-7-7 3.14-7 7 3.141 7 7 7z" />
 );
-
-// const IconShop = MakeIcon(
-//   <path d="M16.53 7l-.564 2h-15.127l-.839-2h16.53zm-14.013 6h12.319l.564-2h-13.722l.839 2zm5.983 5c-.828 0-1.5.672-1.5 1.5 0 .829.672 1.5 1.5 1.5s1.5-.671 1.5-1.5c0-.828-.672-1.5-1.5-1.5zm11.305-15l-3.432 12h-13.017l.839 2h13.659l3.474-12h1.929l.743-2h-4.195zm-6.305 15c-.828 0-1.5.671-1.5 1.5s.672 1.5 1.5 1.5 1.5-.671 1.5-1.5c0-.828-.672-1.5-1.5-1.5z" />
-// );
-
-const FIXTURES = {
-  headerMenu: [
-    { notificationCount: 0, text: "Home" },
-    { isActive: true, notificationCount: 11, text: "Messages" },
-    { notificationCount: 0, text: "Shop" },
-    { notificationCount: 0, text: "Map" },
-    { notificationCount: 0, text: "Files" },
-  ],
-  conversation: [
-    {
-      id: "cc23",
-      isOnline: true,
-      name: "Search For Notes...",
-    },
-  ],
-  messages: [
-    {
-      id: "fd0cf",
-      content:
-        "I got a gig lined up in Watson, no biggie. If you prove useful, expect more side gigs coming your way. I need a half-decent netrunner. Hit me up, provide credentials, eddies on completion.",
-      dateTime: "2077-10-09T11:04:57Z",
-      author: {
-        id: "d12c",
-        name: "V.M. Vargas",
-      },
-    },
-  ],
-};
 
 export default Dashboard;

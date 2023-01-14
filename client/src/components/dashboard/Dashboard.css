@@ -569,3 +569,24 @@ textarea {
   align-self: flex-start;
   box-shadow: -6px -4px 24px rgba(156, 50, 48, 0.4);
 }
+.message-container {
+  display: flex;
+  flex-direction: column;
+}
+.message-nav {
+  text-align: right;
+}
+.deleteIcon {
+  color: #e8615a;
+  padding: 0 0 0 10px;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+.updateIcon {
+  color: #2be4ea;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
