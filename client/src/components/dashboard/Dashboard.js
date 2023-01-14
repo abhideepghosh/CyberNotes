@@ -6,6 +6,8 @@ const Dashboard = () => {
   const userData = useContext(UserContext);
   const navigate = useNavigate();
   const [recentNotes, setRecentNotes] = useState([]);
+  const [allNotes, setAllNotes] = useState([]);
+  const [filterNotes, setFilterNotes] = useState([]);
 
   useEffect(() => {
     if (!userData.state.data) {
@@ -32,13 +34,35 @@ const Dashboard = () => {
           requestOptions
         );
         const data = await response.json();
-        console.log(data.data);
         setRecentNotes(data.data);
       };
       getRecentNotes(id, token);
+
+      const getAllNotes = async (id, token) => {
+        const requestOptions = {
+          method: "GET",
+          headers: new Headers({
+            // prettier-ignore
+            "Authorization": token,
+            "Content-Type": "application/json",
+          }),
+        };
+        const response = await fetch(
+          `http://localhost:5000/v1/notes/getAllUserNotes/${id}`,
+          requestOptions
+        );
+        const data = await response.json();
+        setAllNotes(data);
+      };
+      getAllNotes(id, token);
     }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const filterSearch = () => {
+    console.log(allNotes);
+  };
 
   if (userData.state.data)
     return (
@@ -60,7 +84,7 @@ const Dashboard = () => {
               </div>
             </div>
 
-            <form className="form-search" onSubmit={(e) => e.preventDefault()}>
+            <form className="form-search" onChange={filterSearch}>
               <div className="form-group">
                 <div className="form-control form-control--with-addon">
                   <input name="query" placeholder="Search..." type="text" />
@@ -111,8 +135,23 @@ const Dashboard = () => {
                 </div>
               </div>
               <div className="channel-feed__body">
-                <FeedMessage message={FIXTURES.messages[0]} />
-                <FeedMessage message={FIXTURES.messages[0]} />
+                {allNotes.data &&
+                  allNotes.data.map((note) => (
+                    <div className="message">
+                      <div className="message__body">
+                        <div>{note.title}</div>
+                      </div>
+                      <div className="message__body">
+                        <div>{note.description}</div>
+                      </div>
+                      <div className="message__footer">
+                        <span className="message__authoring">
+                          <em>#_ID: {note._id.slice(-4)}</em>
+                        </span>{" "}
+                        #CREATED_AT: {note.createdAt}
+                      </div>
+                    </div>
+                  ))}
               </div>
               <div className="channel-feed__footer">
                 <form
@@ -167,24 +206,6 @@ function NavSection({ children, renderTitle }) {
         {renderTitle({ className: "nav-section__title" })}
       </div>
       <div className="nav-section__body">{children}</div>
-    </div>
-  );
-}
-
-function FeedMessage({ message }) {
-  return (
-    <div className="message">
-      <div className="message__body">
-        <div>
-          {
-            "I got a gig lined up in Watson, no biggie. If you prove useful, expect more side gigs coming your way. I need a half-decent netrunner. Hit me up, provide credentials, eddies on completion."
-          }
-        </div>
-      </div>
-      <div className="message__footer">
-        <span className="message__authoring">V. M. Vargas</span>
-        {" - 11:04pm"}
-      </div>
     </div>
   );
 }

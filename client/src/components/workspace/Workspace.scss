@@ -2,18 +2,6 @@
   display: flex;
   flex-direction: row;
   justify-content: center;
-  align-items: center;
-}
-.workspace_form__image {
-  position: absolute;
-  animation: none;
-  opacity: 1;
-  border: 1px solid red;
-  top: 0;
-  left: 0;
-  background: linear-gradient(rgba(1, 0, 83, 0.6), rgba(#d00a0a, 0.6));
-  background-position: center;
-  background-size: cover;
 }
 .workspace_form-animation {
   margin-top: 0px;
@@ -57,37 +45,9 @@
 }
 .workspace_notes-area {
   width: 80vw;
-  // height: 80vw;
+  height: 80vw;
 }
-.workspace_form-label-title {
-  background-color: var(--colors-primary--600);
-  color: var(--colors-on_primary--500);
-  font-family: var(--fonts-secondary);
-  font-size: 20px;
-  display: inline-block;
-  padding: 0.125em 0.75em;
-  padding-right: 2em;
-  letter-spacing: 0.065em;
-  line-height: 1;
-  text-transform: uppercase;
-  vertical-align: bottom; /* inline-block fix */
-  clip-path: polygon(
-    0.25em 0,
-    calc(100% - 1em) 0,
-    100% 100%,
-    0.33em 100%,
-    0 100%,
-    0 0.25em
-  );
-}
-.workspace_form-note {
-  width: 90wv;
-}
-.workspace_form-footer {
-  text-align: center;
-}
-
-.workspace_form-label-note {
+.workspace_form-label {
   background-color: var(--colors-primary--600);
   color: var(--colors-on_primary--500);
   font-family: var(--fonts-secondary);
@@ -107,6 +67,28 @@
     0 100%,
     0 0.25em
   );
+}
+.workspace_form__image {
+  position: absolute;
+  animation: none;
+  opacity: 1;
+  border: 1px solid red;
+  top: 0;
+  left: 0;
+  background: linear-gradient(rgba(1, 0, 83, 0.6), rgba(#d00a0a, 0.6));
+  background-position: center;
+  background-size: cover;
+}
+.workspace_form-note {
+  padding: 10px 0;
+  width: 90wv;
+}
+.workspace_form-title {
+  padding: 10px 0;
+  width: 90wv;
+}
+.workspace_form-footer {
+  text-align: center;
 }
 .workspace_form-control-title {
   background-color: var(--colors-bg--300);
@@ -141,7 +123,7 @@
   outline: none;
   padding: 0.5rem;
   resize: none;
-  // width: 100%;
+  width: 100%;
 }
 
 .workspace_form-control-title--with-addon {
@@ -210,7 +192,7 @@
   padding: 0.5rem;
   resize: none;
   height: 380px;
-  // width: 100%;
+  width: 100%;
 }
 
 .workspace_form-control-note--with-addon {
@@ -347,44 +329,7 @@
 .workspace_form-control__addon--suffix {
   order: 1;
 }
-.workspace_form {
-  display: grid;
-  grid-gap: 36px;
-  align-items: center;
-  justify-content: center;
-  max-width: 400px;
-  width: 100%;
-  padding: 30px;
-  overflow: hidden;
-  clip-path: polygon(0 20px, 20px 0, 20px 0, 20px 0, 0 20px, 0 20px);
-  animation: form-open 1s cubic-bezier(0.4, 0, 0.2, 1) forwards 0.5s;
 
-  > * {
-    position: relative;
-    opacity: 0;
-    animation: fade-in 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-  }
-
-  > *:nth-child(2) {
-    animation-delay: 1.2s;
-  }
-
-  > *:nth-child(3) {
-    animation-delay: 1.3s;
-  }
-
-  > *:nth-child(4) {
-    animation-delay: 1.4s;
-  }
-
-  > *:nth-child(5) {
-    animation-delay: 1.5s;
-  }
-
-  > *:nth-child(6) {
-    animation-delay: 1.6s;
-  }
-}
 .workspace_form__image {
   position: absolute;
   animation: none;
@@ -397,4 +342,8 @@
   background: linear-gradient(rgba(1, 0, 83, 0.6), rgba(#d00a0a, 0.6));
   background-position: center;
   background-size: cover;
+}
+.workspace_form-footer-button {
+  padding: 10px;
+  text-align: center;
 }

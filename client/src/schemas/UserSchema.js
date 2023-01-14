@@ -9,3 +9,7 @@ export const emailSchema = yup.object().shape({
 export const passwordSchema = yup.object().shape({
   password: yup.string().min(8).required("Required"),
 });
+
+export const titleSchema = yup.object().shape({
+  title: yup.string().min(1).required("Requried"),
+});
