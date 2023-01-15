@@ -28,3 +28,5 @@ const page = 1;
 const itemsPerPage = 10;
 
 const result = await student.find().skip(page * itemsPerPage).limit(itemsPerPage);
+
+Mern Group Project by Abhideep and Swati 
