@@ -64,7 +64,7 @@ const Signup = () => {
           body: JSON.stringify({ name, email, password }),
         };
         const response = await fetch(
-          "http://localhost:5000/v1/users/signup",
+          "https://cybernotes-backend.onrender.com/v1/users/signup",
           requestOptions
         );
         const data = await response.json();

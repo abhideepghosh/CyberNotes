@@ -36,7 +36,7 @@ const Login = () => {
         body: JSON.stringify({ email: username, password: password }),
       };
       const response = await fetch(
-        "http://localhost:5000/v1/users/login",
+        "https://cybernotes-backend.onrender.com/v1/users/login",
         requestOptions
       );
       const data = await response.json();

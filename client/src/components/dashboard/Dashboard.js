@@ -32,7 +32,7 @@ const Dashboard = () => {
           }),
         };
         const response = await fetch(
-          `http://localhost:5000/v1/notes/recentNotes/${id}`,
+          `https://cybernotes-backend.onrender.com/v1/notes/recentNotes/${id}`,
           requestOptions
         );
         const data = await response.json();
@@ -50,7 +50,7 @@ const Dashboard = () => {
           }),
         };
         const response = await fetch(
-          `http://localhost:5000/v1/notes/getAllUserNotes/${id}`,
+          `https://cybernotes-backend.onrender.com/v1/notes/getAllUserNotes/${id}`,
           requestOptions
         );
         const data = await response.json();
@@ -74,11 +74,7 @@ const Dashboard = () => {
     }, 1000);
   };
 
-  const deleteNote = (e) => {
-    console.log(userData.state.data.data.id, userData.state.data.token);
-    console.log(e);
-    // http://localhost:5000/v1/notes/delete/63b8f0d1b7a13a20e88c1a00/63b904f8b30bc93788652fd8
-  };
+  const deleteNote = (e) => {};
 
   if (userData.state.data)
     return (

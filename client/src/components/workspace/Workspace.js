@@ -32,7 +32,7 @@ const Workspace = () => {
         };
         // console.log(requestOptions);
         const response = await fetch(
-          "http://localhost:5000/v1/notes/createNote/",
+          "https://cybernotes-backend.onrender.com/v1/notes/createNote/",
           requestOptions
         );
         const data = await response.json();
