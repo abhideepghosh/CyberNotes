@@ -10,59 +10,72 @@ const Dashboard = () => {
   const [allNotes, setAllNotes] = useState([]);
   const [filterNotes, setFilterNotes] = useState([]);
   let timer;
-
+  const[openModal,setOpenModal] = useState("display-none");
+  const[deleteIndex, setDeleteIndex] = useState('');
+  const[deleteSuccess, setDeleteSuccess] = useState(false);
+  const openModalInput = (index) =>{
+          setOpenModal("display-block");
+          setDeleteIndex(index);
+  }
+  const closeModalInput = () =>{
+      setOpenModal("display-none");
+      setDeleteIndex('');
+  }
+  const getAllNotes = async (id, token) => {
+    const requestOptions = {
+      method: "GET",
+      headers: new Headers({
+        // prettier-ignore
+        "Authorization": token,
+        "Content-Type": "application/json",
+      }),
+    };
+    const response = await fetch(
+      `https://cybernotes-backend.onrender.com/v1/notes/getAllUserNotes/${id}`,
+      requestOptions
+    );
+    const data = await response.json();
+    setAllNotes(data);
+    setFilterNotes(data.data);
+    // console.log(filterNotes);
+  };
+  
+  const getRecentNotes = async (id, token) => {
+    const requestOptions = {
+      method: "GET",
+      headers: new Headers({
+        // prettier-ignore
+        "Authorization": token,
+        "Content-Type": "application/json",
+      }),
+    };
+    const response = await fetch(
+      `https://cybernotes-backend.onrender.com/v1/notes/recentNotes/${id}`,
+      requestOptions
+    );
+    const data = await response.json();
+    setRecentNotes(data.data);
+  };
   useEffect(() => {
     if (!userData.state.data) {
       navigate("/");
     } else {
       const { id, name } = userData.state.data.data;
       const { token } = userData.state.data;
-
+      // console.log(id);
       document.querySelector(".segment-topbar__overline").textContent =
         "NetWire_Seed: " + id;
       document.querySelector(".channel-link__icon").textContent = "# " + name;
 
-      const getRecentNotes = async (id, token) => {
-        const requestOptions = {
-          method: "GET",
-          headers: new Headers({
-            // prettier-ignore
-            "Authorization": token,
-            "Content-Type": "application/json",
-          }),
-        };
-        const response = await fetch(
-          `https://cybernotes-backend.onrender.com/v1/notes/recentNotes/${id}`,
-          requestOptions
-        );
-        const data = await response.json();
-        setRecentNotes(data.data);
-      };
       getRecentNotes(id, token);
 
-      const getAllNotes = async (id, token) => {
-        const requestOptions = {
-          method: "GET",
-          headers: new Headers({
-            // prettier-ignore
-            "Authorization": token,
-            "Content-Type": "application/json",
-          }),
-        };
-        const response = await fetch(
-          `https://cybernotes-backend.onrender.com/v1/notes/getAllUserNotes/${id}`,
-          requestOptions
-        );
-        const data = await response.json();
-        setAllNotes(data);
-        setFilterNotes(data.data);
-      };
+    
       getAllNotes(id, token);
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
+ 
   // Debounce Function
   const filterSearch = (e) => {
     if (timer) clearTimeout(timer);
@@ -74,10 +87,47 @@ const Dashboard = () => {
     }, 1000);
   };
 
-  const deleteNote = (e) => {};
+  const deleteNote = async() => {
+    if(deleteIndex !== ''){
+      const { id } = userData.state.data.data;
+      const { token } = userData.state.data;
+      // console.log("dI" + deleteIndex);
+      const deleteNoteId = filterNotes[deleteIndex]._id; 
+      console.log(deleteIndex , deleteNoteId);
+      console.log("userID "  + id);
+      const requestOptions = {
+        method: "DELETE",
+        headers: new Headers({
+          // prettier-ignore
+          "Authorization": token,
+          "Content-Type": "application/json",
+        }),
+      };
+      const response = await fetch(
+        `https://cybernotes-backend.onrender.com/v1/notes/delete/${id}/${deleteNoteId}`,
+        requestOptions
+      );
+      // console.log(response);
+      const data = await response.json();
+      
+      if (data.status === "success"){
+        setDeleteSuccess(true);
+        setDeleteIndex('');
+        await getAllNotes(id,token);
+        await getRecentNotes(id,token);
+        
+      }
+      setOpenModal("display-none");
+      setTimeout(() => {  
+        setDeleteSuccess(false);
+      }, 500);
+      
+    }
+  };
 
   if (userData.state.data)
     return (
+      <div>
       <div className="app-skeleton">
         <div className="app-container">
           <div className="app-a">
@@ -149,9 +199,10 @@ const Dashboard = () => {
                         <button className="updateIcon">
                           <em>#Update</em>
                         </button>
-                        <button className="deleteIcon" onClick={deleteNote}>
+                        <button className="deleteIcon" onClick={() => openModalInput(index)}>
                           <em>#Delete</em>
                         </button>
+   
                       </div>
                       <div className="message">
                         <div className="message__body">
@@ -186,6 +237,23 @@ const Dashboard = () => {
             </Pad>
           </div>
         </div>
+      </div>
+      <div  className={openModal}>
+  <div className="delete-modal">
+        <div className="inner-delete-modal">
+            <button id="delete-button" onClick={closeModalInput}  className="close"></button>
+           <p>Are you sure you want to delete {" "} 
+            {(deleteIndex === '') ? "" : `"${filterNotes[deleteIndex].title}"` }
+            </p> 
+            <div className="delete-modal-options">
+            <button className="delete-modal-option delete-modal-yes" onClick={deleteNote}>Yes</button><button className="delete-modal-option delete-modal-no" onClick={closeModalInput}>No</button>
+            </div>
+        </div> 
+  </div>
+</div>
+
+{(deleteSuccess === true) ?<div className="delete-modal"><div className="delete-success-message"><p>Note Deleted</p></div></div>: " "}
+
       </div>
     );
   else navigate("/");

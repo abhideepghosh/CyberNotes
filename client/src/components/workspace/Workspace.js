@@ -53,7 +53,7 @@ const Workspace = () => {
   return (
     <div className="workspace_body">
       <form
-        className="workspace_form-animation"
+        className="workspace_form"
         action="#"
         method="post"
         onSubmit={createNote}

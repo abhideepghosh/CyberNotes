@@ -1,6 +1,5 @@
     Workflow for Version II:
-	1. Implementation -> Delete Note (Complete Implementation)
-	2. Implementation -> Update Note (Complete Implementation)
+	2. Implementation -> Update Note (Complete Implementation) 
 	3. Implement Settings Component
 		a. Delete User -> Delete User
 	4. Create Note (WorkSpace Bug Fixes
@@ -34,3 +33,9 @@ const page = 1;
 const itemsPerPage = 10;
 
 const result = await student.find().skip(page * itemsPerPage).limit(itemsPerPage);
+
+
+
+>> modal 
+https://codepen.io/vivekgondaliya/pen/QPBmbq
+https://codepen.io/brissmyr/pen/nLmreZ

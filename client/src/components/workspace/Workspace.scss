@@ -2,8 +2,9 @@
   display: flex;
   flex-direction: row;
   justify-content: center;
+  padding: 20px;
 }
-.workspace_form-animation {
+.workspace_form {
   margin-top: 0px;
   display: grid;
   grid-gap: 36px;
@@ -11,16 +12,15 @@
   justify-content: center;
   max-width: 90%;
   width: 100%;
-  height: 80vw;
   padding: 30px 0;
   overflow: hidden;
   clip-path: polygon(0 20px, 20px 0, 20px 0, 20px 0, 0 20px, 0 20px);
-  animation: form-open 1s cubic-bezier(0.4, 0, 0.2, 1) forwards 0.5s;
+  animation: workspace_form-open 1s cubic-bezier(0.4, 0, 0.2, 1) forwards 0.5s;
 
   > * {
     position: relative;
     opacity: 0;
-    animation: fade-in 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    animation: workspace_fade-in 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
   }
 
   > *:nth-child(2) {
@@ -43,9 +43,48 @@
     animation-delay: 1.6s;
   }
 }
+
+@keyframes workspace_form-open {
+  0% {
+    clip-path: polygon(0 20px, 20px 0, 20px 0, 20px 0, 0 20px, 0 20px);
+  }
+  50% {
+    clip-path: polygon(
+      0 20px,
+      20px 0,
+      20px 0,
+      20px calc(100% - 20px),
+      0 100%,
+      0 100%
+    );
+  }
+  100% {
+    clip-path: polygon(
+      0 20px,
+      20px 0,
+      100% 0,
+      100% calc(100% - 20px),
+      calc(100% - 20px) 100%,
+      0 100%
+    );
+  }
+}
+
+@keyframes workspace_fade-in {
+  0% {
+    opacity: 0;
+    transform: translate3d(-16px, 0, 0);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
 .workspace_notes-area {
   width: 80vw;
-  height: 80vw;
+  
 }
 .workspace_form-label {
   background-color: var(--colors-primary--600);
@@ -68,17 +107,7 @@
     0 0.25em
   );
 }
-.workspace_form__image {
-  position: absolute;
-  animation: none;
-  opacity: 1;
-  border: 1px solid red;
-  top: 0;
-  left: 0;
-  background: linear-gradient(rgba(1, 0, 83, 0.6), rgba(#d00a0a, 0.6));
-  background-position: center;
-  background-size: cover;
-}
+
 .workspace_form-note {
   padding: 10px 0;
   width: 90wv;
@@ -191,7 +220,7 @@
   outline: none;
   padding: 0.5rem;
   resize: none;
-  height: 380px;
+  height: 280px;
   width: 100%;
 }
 
@@ -338,7 +367,7 @@
   top: 0;
   left: 0;
   width: 100vw;
-  height: 100vh;
+  height: 100%;
   background: linear-gradient(rgba(1, 0, 83, 0.6), rgba(#d00a0a, 0.6));
   background-position: center;
   background-size: cover;

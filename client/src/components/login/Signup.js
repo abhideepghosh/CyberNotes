@@ -89,6 +89,13 @@ const Signup = () => {
     <main className="login_container">
       <form className="form" action="" method="post">
         <div className="form__image"></div>
+        <h1 className="cyberpunk2">
+          <em>Register</em>
+        </h1>
+        <div id="light">
+          <div id="lineh1"></div>
+          <div id="lineh2"></div>
+        </div>
         <div className="editor-field editor-field__textbox">
           <div className="editor-field__label-container">
             <label className="editor-field__label">Name</label>
@@ -210,17 +217,11 @@ const Signup = () => {
         <div>
           Already part of the community!{" "}
           <Link to="/">
-            <em className="errorem">Login</em>
+            <em>Login</em>
           </Link>
         </div>
       </form>
-      {/* <div>
-        <h1 className="cyberpunk1 glitched">Login</h1>
-        <h2 className="cyberpunk2 glitched">Login</h2>
-        <h3 className="cyberpunk3 glitched">Login</h3>
-        <h4 className="cyberpunk4 glitched">Login</h4>
-        <hr /> 
-      </div>*/}
+    
     </main>
   );
 };
