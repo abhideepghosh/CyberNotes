@@ -9,6 +9,7 @@ import UserState from "./context/users/userState";
 
 import Settings from "./components/settings/Settings";
 import Workspace from "./components/workspace/Workspace";
+import Loader from "./components/loader/Loader";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
             <Route path="/signup" element={<Signup />} />
             <Route path="/home/workspace" element={<Workspace />} />
             <Route path="/home/settings" element={<Settings />} />
+            <Route path="/loader" element={<Loader />} />
           </Routes>
         </Router>
       </UserState>

@@ -1,12 +1,18 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate} from "react-router-dom";
 import "./Login.scss";
 import UserContext from "../../context/users/userContext";
+import {
+  emailSchema,
+  passwordSchema,
+} from "../../schemas/UserSchema";
 
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [validLogin, setValidLogin] = useState(true);
+  const [validEmail, setValidEmail] = useState(true);
+  const [validPassword, setValidPassword] = useState(true);
   const userData = useContext(UserContext);
   const navigate = useNavigate();
 
@@ -25,11 +31,24 @@ const Login = () => {
 
   const loginDetailsUpdate = (data) => {
     userData.update({ data });
+    userData.setValidLogin(true);
   };
-
+  
   const login = async () => {
     try {
+      const isValidEmail = await emailSchema.isValid({ email: username });
+      setValidEmail(isValidEmail);
+      const isValidPassword = await passwordSchema.isValid({
+        password: password,
+      });
+      setValidPassword(isValidPassword);
       setValidLogin(true);
+      const validCredentials = isValidEmail && isValidPassword;
+      if(validCredentials){
+      setTimeout(() => {
+        navigate("/loader");
+      }, 1000);
+    }
       const requestOptions = {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -38,15 +57,15 @@ const Login = () => {
       const response = await fetch(
         "https://cybernotes-backend.onrender.com/v1/users/login",
         requestOptions
-      );
+        );
       const data = await response.json();
-
       if (data.status === "success") {
         data.token = "Bearer " + data.token;
         loginDetailsUpdate(data);
         navigate("/home");
       } else {
-        setValidLogin(false);
+        userData.setValidLogin(false);
+        navigate("/");
         console.log("Invalid Email Or Password");
       }
     } catch (error) {
@@ -56,6 +75,7 @@ const Login = () => {
 
   useEffect(() => {
     resize();
+    setValidLogin(userData.login);
   }, []);
 
   return (
@@ -92,6 +112,17 @@ const Login = () => {
           </div>
           <span className="editor-field__bottom"></span>
           <div className="editor-field__noise"></div>
+          {validEmail ? (
+            ""
+          ) : (
+            <div className="error">
+              <p>
+                <em className="errorem">
+                  Email is required
+                </em>
+              </p>
+            </div>
+          )}
         </div>
         <div className="editor-field editor-field__textbox">
           <div className="editor-field__label-container">
@@ -108,6 +139,17 @@ const Login = () => {
           </div>
           <span className="editor-field__bottom "></span>
           <div className="editor-field__noise"></div>
+          {validPassword ? (
+            ""
+          ) : (
+            <div className="error">
+              <p>
+                <em className="errorem">
+                  Password is required
+                </em>
+              </p>
+            </div>
+          )}
         </div>
         <div className="btn btn--primary" onClick={login}>
           <div className="btn__container">Login</div>

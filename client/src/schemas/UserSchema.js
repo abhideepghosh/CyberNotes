@@ -13,3 +13,4 @@ export const passwordSchema = yup.object().shape({
 export const titleSchema = yup.object().shape({
   title: yup.string().min(1).required("Requried"),
 });
+

@@ -17,7 +17,7 @@ const Workspace = () => {
   };
   const createNote = async (e) => {
     e.preventDefault();
-    const isValidTitle = await titleSchema.isValid({ title: title });
+    const isValidTitle = await titleSchema.isValid({ title: title.trim() });
     setValidTitle(isValidTitle);
     try {
       if (isValidTitle) {

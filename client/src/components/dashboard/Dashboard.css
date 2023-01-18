@@ -626,24 +626,23 @@ textarea {
   background: none;
 }
 .delete-modal-option{
+  background: transparent;
+  border: 1px solid  #e8615a;
+  color:  #e8615a;
   font-size: 18px;
   padding: 5px;
   margin: 5px;
+  width: 75px;
   border-radius: 2px;
+  transition: transform 0.2s;
+}
+.delete-modal-option:hover , .delete-modal-option:focus{
+  transform: scale(1.2);
+}
+.delete-p{
+  color: #e8615a;
+}
 
-}
-.delete-modal-yes{
-  background-color: #e8615a;
-}
-.delete-modal-yes:hover , .delete-modal-yes:focus {
-  scale: 1.2;
-}
-.delete-modal-no{
-  background-color:  #2be4ea;
-}
-.delete-modal-no:hover , .delete-modal-no:focus{
-  scale: 1.2;
-}
 .inner-delete-modal{
   font-size: 20px;
   border: 1px solid #e8615a;

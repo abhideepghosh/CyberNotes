@@ -86,6 +86,9 @@ const Dashboard = () => {
       setFilterNotes(arr);
     }, 1000);
   };
+  const updateInput = () =>{
+
+  }
 
   const deleteNote = async() => {
     if(deleteIndex !== ''){
@@ -196,7 +199,7 @@ const Dashboard = () => {
                   filterNotes.map((note, index) => (
                     <div className="message-container" key={index}>
                       <div className="message-nav">
-                        <button className="updateIcon">
+                        <button className="updateIcon" onClick={() => updateInput(index)}>
                           <em>#Update</em>
                         </button>
                         <button className="deleteIcon" onClick={() => openModalInput(index)}>
@@ -242,11 +245,11 @@ const Dashboard = () => {
   <div className="delete-modal">
         <div className="inner-delete-modal">
             <button id="delete-button" onClick={closeModalInput}  className="close"></button>
-           <p>Are you sure you want to delete {" "} 
-            {(deleteIndex === '') ? "" : `"${filterNotes[deleteIndex].title}"` }
-            </p> 
+            <p className="delete-p"><em>Are you sure you want to delete {" "} 
+            {(deleteIndex === '') ? "" : `"${filterNotes[deleteIndex].title.trim()}"` }
+            </em></p> 
             <div className="delete-modal-options">
-            <button className="delete-modal-option delete-modal-yes" onClick={deleteNote}>Yes</button><button className="delete-modal-option delete-modal-no" onClick={closeModalInput}>No</button>
+            <button className="delete-modal-option" onClick={deleteNote}>Yes</button><button className="delete-modal-option" onClick={closeModalInput}>No</button>
             </div>
         </div> 
   </div>

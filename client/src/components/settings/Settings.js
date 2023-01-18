@@ -5,8 +5,8 @@ const Settings = () => {
   return (
     <div>
       <div className="settings-container">
-        <div class="sidebar">
-          <nav class="sidebar_menu">
+        <div className="sidebar">
+          <nav className="sidebar_menu">
             <button>
               <span>
                 <span>Delete User</span>
@@ -14,7 +14,7 @@ const Settings = () => {
             </button>
             <button>
               <span>
-                <i class="fa-solid fa-magnifying-glass"></i>
+                <i className="fa-solid fa-magnifying-glass"></i>
                 <span>Search</span>
               </span>
             </button>
