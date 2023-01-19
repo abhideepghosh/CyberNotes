@@ -11,3 +11,39 @@
     align-items: center;
     height: 100vh;
   }
+  .loader2body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 75vh;
+  }
+  .loader2{
+    width: 200px;
+    border: 10px solid red;
+  }
+  .rotate{
+    animation: rotatearound 4s infinite linear;
+  }
+  @keyframes rotatearound {
+    0% {
+      transform: translate(-50%, -50%) 
+                 perspective(200px) 
+                 rotateX(0deg) 
+                 rotateY(0deg);
+  }
+  
+  50% {
+      transform: translate(-50%, -50%) 
+                 perspective(200px) 
+                 rotateX(-180deg) 
+                 rotateY(0deg);
+  }
+  
+  100% {
+      transform: translate(-50%, -50%) 
+                 perspective(200px) 
+                 rotateX(-180deg) 
+                 rotateY(-180deg);
+  }
+    
+  }

@@ -956,53 +956,6 @@ p.cyberpunk:after {
 
 /* Separator */
 
-hr {
-  height: 14px;
-  background-color: #000;
-  width: 100%;
-  clip-path: polygon(
-    1px 0px,
-    0px 0px,
-    0px 0px,
-    8px 14px,
-    13px 14px,
-    22px 7px,
-    42px 6px,
-    49px 2px,
-    100% 2px,
-    100% 0px,
-    42px 0px,
-    35px 5px,
-    22px 6px,
-    13px 13px,
-    9px 13px
-  );
-  animation-name: hr;
-  animation-duration: var(--glitched-long-duration);
-  animation-iteration-count: infinite;
-  animation-timing-function: linear;
-}
-
-@keyframes hr {
-  0% {
-    transform: skew(0deg);
-  }
-  15% {
-    transform: skew(0deg);
-  }
-  16% {
-    transform: skew(20deg);
-  }
-  20% {
-    transform: skew(20deg);
-  }
-  21% {
-    transform: skew(0deg);
-  }
-  100% {
-    right: 35px;
-  }
-}
 
 // /* Scrollbar */
 

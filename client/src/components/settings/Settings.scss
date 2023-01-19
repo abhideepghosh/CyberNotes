@@ -1,0 +1,112 @@
+.settings-container {
+  display: flex;
+  flex-direction: row;
+}
+.settings-body{
+  margin-top: -12px;
+  padding: 50px;
+  width: 70%;
+  height: 88vh;
+  background-color: var(--colors-bg--500);
+  background-image: radial-gradient(
+    ellipse at 33% 10%,
+    #461616 0%,
+    transparent 75%
+  );
+}
+.sidebar {
+  width: 30%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 2.5rem 0.5rem 2rem 0.5rem;
+}
+
+
+.sidebar button {
+  color: inherit;
+  background: transparent;
+  height: 60px;
+  font-family: inherit;
+  border: 0;
+  outline: 0;
+  padding: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  grid-gap: 0.9rem;
+  height: 8.8vh;
+  border-radius: 1.8rem;
+  padding: 0 0.9rem;
+  line-height: 1;
+}
+
+
+
+.sidebar nav {
+  display: flex;
+  flex-direction: column;
+  
+}
+
+
+
+
+.sidebar button:focus  { 
+  background: #461616;
+  color:  #2be4ea;
+}
+.sidebar button:focus >.angluar_tag{
+  display: block;
+}
+
+@media (width < 580px) {
+  .sidebar {
+    width: 73px;
+  }
+
+}
+
+.angluar_tag{
+  display: none;
+}
+
+.settings-sections{
+  font-size: 20px;
+  margin: 20px;
+  padding : 10px;
+  border: 1px solid rgb(0, 0, 0);
+  background-color: var(--colors-bg--500);
+  background-image: radial-gradient(
+    ellipse at 33% 10%,
+    #461616 0%,
+    transparent 120%
+  );
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+  line-height: 40px;
+  overflow: hidden;
+}
+tr > td:nth-child(1){
+  width: 40%;
+}
+.settings-sections > button {
+   padding: 10px;
+   float: right;
+  //  background-color: #8b0505;
+   transition: transform 0.2s;
+   color: black;
+	background-color: #960000;
+	transition: .2s ease-in-out;
+	border-left: 3px transparent solid;
+	border-right: 3px transparent solid;
+}
+
+.settings-sections > button:hover {
+  transform: scale(1.1);
+  // background-color: #8b0505;
+  color: #960000;
+	background-color: black;
+	border-left: #960000 3px solid;
+	border-right: #960000 3px solid;
+}

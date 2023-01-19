@@ -60,6 +60,7 @@ const Login = () => {
         );
       const data = await response.json();
       if (data.status === "success") {
+        console.log("success");
         data.token = "Bearer " + data.token;
         loginDetailsUpdate(data);
         navigate("/home");

@@ -9,6 +9,7 @@ const Workspace = () => {
   const [title, setTitle] = useState("");
   const [validTitle, setValidTitle] = useState(true);
   const [description, setDescription] = useState("");
+  const[ createNoteSuccess, setCreateNoteSuccess] = useState(false);
   const titleInput = (e) => {
     setTitle(e.target.value);
   };
@@ -37,12 +38,16 @@ const Workspace = () => {
         );
         const data = await response.json();
         if (data.status === "success") {
-          alert("Note Created");
+          setCreateNoteSuccess("true");
           setTitle("");
           setDescription("");
         } else {
           console.log("Unsuccesfull");
         }
+        setTimeout(() => {  
+          setCreateNoteSuccess(false);
+        }, 1200);
+
       } else {
         console.log("Unsucessfull title empty");
       }
@@ -107,6 +112,7 @@ const Workspace = () => {
           </div>
         </div>
       </form>
+      {(createNoteSuccess) ? <div className="delete-modal"><div className="delete-success-message"><p>Note Created</p></div></div>: " "}
     </div>
   );
 };

@@ -10,7 +10,7 @@ import UserState from "./context/users/userState";
 import Settings from "./components/settings/Settings";
 import Workspace from "./components/workspace/Workspace";
 import Loader from "./components/loader/Loader";
-
+import Loader2 from "./components/loader/Loader2";
 function App() {
   return (
     <div className="App">
@@ -25,6 +25,7 @@ function App() {
             <Route path="/home/workspace" element={<Workspace />} />
             <Route path="/home/settings" element={<Settings />} />
             <Route path="/loader" element={<Loader />} />
+            <Route path="/loader2" element={<Loader2 />} />
           </Routes>
         </Router>
       </UserState>
