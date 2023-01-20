@@ -23,7 +23,7 @@ var wordflick = function () {
       }
     }
     else {
-      if (offset == 0) {
+      if (offset === 0) {
         forwards = true;
         i++;
         offset = 0;
