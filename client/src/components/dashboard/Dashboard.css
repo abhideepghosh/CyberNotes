@@ -691,3 +691,13 @@ textarea {
   margin: 50px;
   font-size: 20px;
 }
+
+#searchField:-webkit-autofill,
+#searchField:-webkit-autofill:hover, 
+#searchField:-webkit-autofill:focus, 
+#searchField:-webkit-autofill:active{
+    -webkit-box-shadow: 0 0 0 30px  #1E181E inset !important;
+}
+#searchField:-webkit-autofill{
+  -webkit-text-fill-color: #e86158 !important;
+}

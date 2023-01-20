@@ -957,36 +957,18 @@ p.cyberpunk:after {
 /* Separator */
 
 
-// /* Scrollbar */
 
-// ::-webkit-scrollbar {
-//   background-color: var(--red-color);
-// }
-// ::-webkit-scrollbar-button {
-//   display: none;
-// }
-// ::-webkit-scrollbar-track {
-//   display: none;
-// }
-// ::-webkit-scrollbar-track-piece {
-//   display: none;
-// }
-// ::-webkit-scrollbar-thumb {
-//   background-color: var(--red-color);
-//   border-bottom: 2px solid var(--border-color);
-//   border-right: 2px solid var(--border-color);
-//   transition: background var(--glitched-duration);
-// }
-// ::-webkit-scrollbar-thumb:hover {
-//   background-color: var(--orange-color);
-// }
-// ::-webkit-scrollbar-corner {
-//   display: none;
-// }
-// ::-webkit-resizer {
-//   display: none;
-// }
 
 em {
   line-height: 2rem;
+}
+
+.editor-field__input:-webkit-autofill,
+.editor-field__input:-webkit-autofill:hover, 
+.editor-field__input:-webkit-autofill:focus, 
+.editor-field__input:-webkit-autofill:active{
+    -webkit-box-shadow: 0 0 0 30px  #0F1020 inset !important;
+}
+.editor-field__input:-webkit-autofill{
+  -webkit-text-fill-color: #5E5F84 !important;
 }
