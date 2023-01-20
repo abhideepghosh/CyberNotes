@@ -84,7 +84,7 @@ const Login = () => {
   useEffect(() => {
     resize();
     setValidLogin(userData.login);
-  });
+  },[userData.login]);
 
   return (
     <main className="login_container">
