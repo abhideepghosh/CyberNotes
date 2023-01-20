@@ -5,7 +5,7 @@ import UserContext from "../../context/users/userContext";
 
 const Settings = () => {
   const [deleteUserSection ,setDeleteUserSection] = useState("display-none");
-  const [profileInfoSection  ,setProfileInfoSection] = useState("display-none");
+  const [profileInfoSection  ,setProfileInfoSection] = useState("display-block");
   const [deleteAllNotesSection  ,setDeleteAllNotesSection] = useState("display-none");
   const[openModal,setOpenModal] = useState("display-none");
   const userData = useContext(UserContext);
@@ -83,8 +83,6 @@ const deleteAllNotes =  async() =>{
       setDeleteSuccess(true);
       console.log("success");
       navigate("/home");
-    }else{
-      console.log("fsil");
     }
     setTimeout(() => {  
       setDeleteSuccess(false);
@@ -98,10 +96,10 @@ const deleteAllNotes =  async() =>{
       <div className="settings-container">
         <div className="sidebar">
           <nav className="sidebar_menu">
-            <button onClick={enableProfile}>
+            <button onClick={enableProfile} >
                 <span>Profile</span><span className="angluar_tag">&gt;</span>
             </button>
-            <button onClick={enableDeleteAllNotes} >
+            <button onClick={enableDeleteAllNotes}>
                 <span>Reset Account</span><span className="angluar_tag"> &gt;</span>
             </button>
             <button onClick={enableDeleteUser} >

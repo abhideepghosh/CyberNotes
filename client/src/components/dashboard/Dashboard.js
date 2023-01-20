@@ -14,6 +14,7 @@ const Dashboard = () => {
   const[deleteIndex, setDeleteIndex] = useState('');
   const[deleteSuccess, setDeleteSuccess] = useState(false);
   const[valueInput,setValueInput] = useState();
+  const[notesLength , setNotesLength] = useState();
   
   const openModalInput = (index) =>{
           setOpenModal("display-block");
@@ -37,6 +38,11 @@ const Dashboard = () => {
       requestOptions
     );
     const data = await response.json();
+    if(data.data.length === 0){
+        setNotesLength(0);
+    }else{
+        setNotesLength(data.data.length);
+    }
     setAllNotes(data);
     setFilterNotes(data.data);
     // console.log(filterNotes);
@@ -202,8 +208,8 @@ const Dashboard = () => {
                 </div>
               </div>
               <div className="channel-feed__body">
-                {(filterNotes.length === 0) ?
-                  <div className="noNotes">Click here to create your <Link to="/home/createNote"><b>first note</b></Link></div> : ""
+                {(notesLength === 0) ?
+                  <em><div className="noNotes">Click here to create your <Link to="/home/createNote"><b>first note</b></Link></div></em> : ""
                 }
                 {allNotes.data &&
                   filterNotes.map((note, index) => (
