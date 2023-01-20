@@ -1,25 +1,24 @@
 
+  @import url('https://fonts.googleapis.com/css2?family=Orbitron&display=swap');
+
   .loader{
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    height: 70vh;
     background: inherit;
-    font-family: "Oswald", sans-serif;
+    font-family: "Orbitron", sans-serif;
     font-style: italic;
   }
   
   .container {
-    position: absolute;
-    transform: translate(-50%, -50%);
-    top: 40%;
-    left: 60%;
+    width: 540px;
   }
   
   .glitch {
-    color: rgb(223, 191, 191);
+    color: #e8615a;
     position: relative;
-    font-size: 9vw;
+    font-size: 6vw;
     // margin: 70px 200px;
     animation: glitch 5s 5s infinite;
   }
@@ -28,7 +27,7 @@
     content: attr(data-text);
     position: absolute;
     left: -2px;
-    text-shadow: -5px 0 magenta;
+    text-shadow: -5px 0 #2be4ea;
     overflow: hidden;
     top: 0;
     animation: noise-1 3s linear infinite alternate-reverse, glitch 5s 5.05s infinite;
@@ -38,7 +37,7 @@
     content: attr(data-text);
     position: absolute;
     left: 2px;
-    text-shadow: -5px 0 lightgreen;
+    text-shadow: -5px 0 #2be4ea;
     overflow: hidden;
     top: 0;
     animation: noise-2 3s linear infinite alternate-reverse, glitch 5s 5s infinite;

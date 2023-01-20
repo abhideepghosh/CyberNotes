@@ -45,7 +45,6 @@ const Dashboard = () => {
     }
     setAllNotes(data);
     setFilterNotes(data.data);
-    // console.log(filterNotes);
   };
   
   const getRecentNotes = async (id, token) => {
@@ -103,10 +102,7 @@ const Dashboard = () => {
     if(deleteIndex !== ''){
       const { id } = userData.state.data.data;
       const { token } = userData.state.data;
-      // console.log("dI" + deleteIndex);
       const deleteNoteId = filterNotes[deleteIndex]._id; 
-      console.log(deleteIndex , deleteNoteId);
-      console.log("userID "  + id);
       const requestOptions = {
         method: "DELETE",
         headers: new Headers({

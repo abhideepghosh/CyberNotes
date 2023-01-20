@@ -34,7 +34,6 @@ const enableDeleteAllNotes = () => {
   setDeleteUserSection("display-none");
 }
 const deleteUser =  async() =>{
-     console.log("clicked Delete User");
      try {
       const { token } = userData.state.data;
       const requestOptions = {
@@ -62,22 +61,18 @@ const deleteUser =  async() =>{
     }
 }
 const deleteAllNotes =  async() =>{
-  console.log("clicked Delete All Notes");
   try {
     const { token } = userData.state.data;
-    console.log(token);
     const requestOptions = {
       method: "DELETE",
       headers: {
          "Authorization": token,
       "Content-Type": "application/json", },
     };
-    console.log(id);
     const response = await fetch(
       `https://cybernotes-backend.onrender.com/v1/notes/deleteAllNotes/${id}`,
       requestOptions
       );
-      console.log("here2");
     const data = await response.json();
     if (data.status === "success") {
       setDeleteSuccess(true);

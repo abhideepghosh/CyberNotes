@@ -44,7 +44,6 @@ const Signup = () => {
   };
 
   const register = async () => {
-    // console.log(name, email, password, confirmPassword);
     const isValidName = await nameSchema.isValid({ name: name });
     setValidName(isValidName);
     const isValidEmail = await emailSchema.isValid({ email: email });
@@ -55,12 +54,8 @@ const Signup = () => {
     setValidPassword(isValidPassword);
     setValidConfirmPassword(password === confirmPassword);
     setValidUniqueEmail(true);
-    console.log("Name:" + isValidName + " " + name);
-    console.log("Email:" + isValidEmail + " " + email);
-    console.log("Password:" + isValidPassword + " " + password);
     try {
-      const isValidAll =
-        validName && validEmail && validPassword && validConfirmPassword;
+      const isValidAll = isValidName && isValidEmail && isValidPassword && (password === confirmPassword);
       if (isValidAll) {
         setTimeout(() => {
           navigate("/loader2");
@@ -79,10 +74,9 @@ const Signup = () => {
         else {
           setValidUniqueEmail(false);
           navigate("/Signup");
-          console.log(data.status);
         }
       } else {
-        // console.log("Data Not Valid");
+        console.log("Invalid data");
       }
     } catch (error) {
       console.log(error);

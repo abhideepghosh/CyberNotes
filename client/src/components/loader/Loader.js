@@ -5,12 +5,14 @@ const Loader = () =>  {
 
 return (
     <div className="loader">
-     <div class="container">
-  <div class="glitch" data-text="CyberNotes">CyberNotes</div>
-  <div class="glow">CyberNotes</div>
-  <p class="subtitle">WELCOME-TO</p>
+      <div>
+     <div className="container">
+  <div className="glitch" data-text="CyberNotes">CyberNotes</div>
+  <div className="glow">CyberNotes</div>
+  <p className="subtitle">WELCOME-TO</p>
   </div>
-  <div class="scanlines"></div>
+  <div className="scanlines"></div>
+  </div>
     </div>
   )
 }
