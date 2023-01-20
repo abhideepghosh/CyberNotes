@@ -13,6 +13,8 @@ const Dashboard = () => {
   const[openModal,setOpenModal] = useState("display-none");
   const[deleteIndex, setDeleteIndex] = useState('');
   const[deleteSuccess, setDeleteSuccess] = useState(false);
+  const[valueInput,setValueInput] = useState();
+  
   const openModalInput = (index) =>{
           setOpenModal("display-block");
           setDeleteIndex(index);
@@ -68,27 +70,27 @@ const Dashboard = () => {
       document.querySelector(".channel-link__icon").textContent = "# " + name;
 
       getRecentNotes(id, token);
-
-    
       getAllNotes(id, token);
     }
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
  
   // Debounce Function
-  const filterSearch = (e) => {
+  const searchTextInput = (searchText) => {
+    filterSearch(searchText);
+  };
+
+  const filterSearch = (value) => {   
+    setValueInput(value);
     if (timer) clearTimeout(timer);
     timer = setTimeout(() => {
       const arr = allNotes.data.filter((element) =>
-        element.title.toLowerCase().includes(e.target.value.toLowerCase())
+        element.title.toLowerCase().includes(value.toLowerCase())
       );
       setFilterNotes(arr);
     }, 1000);
   };
-  const updateInput = () =>{
 
-  }
 
   const deleteNote = async() => {
     try {
@@ -152,10 +154,10 @@ const Dashboard = () => {
               </div>
             </div>
 
-            <form className="form-search" onChange={filterSearch}>
+            <form className="form-search" >
               <div className="form-group">
                 <div className="form-control form-control--with-addon">
-                  <input name="query" placeholder="Search..." type="text" />
+                  <input name="query" placeholder="Search..." type="text" id="searchField" value={valueInput} onChange={(e) => {filterSearch(e.target.value)}}/>
                   <div className="form-control__addon form-control__addon--prefix">
                     <IconSearchSubmit />
                   </div>
@@ -169,6 +171,8 @@ const Dashboard = () => {
               <ChannelNav
                 activeChannel={{ id: "userID", name: "USERNAME" }}
                 channels={recentNotes}
+                searchTextInput = {searchTextInput}
+                
               />
             </NavSection>
           </div>
@@ -279,7 +283,7 @@ function NavSection({ children, renderTitle }) {
   );
 }
 
-function ChannelNav({ activeChannel = null, channels = [] }) {
+function ChannelNav({ activeChannel = null, channels = [] , searchTextInput }) {
   return (
     <ul className="nav">
       {channels.map((channel, i) => (
@@ -290,9 +294,9 @@ function ChannelNav({ activeChannel = null, channels = [] }) {
                 ? "nav__link--active"
                 : ""
             }`}
-            onClick={() => console.log(channel)}
+            onClick={() => searchTextInput(channel.title)}
           >
-            <ChannelLink {...channel}>{channel.title}</ChannelLink>
+            <ChannelLink {...channel} >{channel.title}</ChannelLink>
           </Link>
         </li>
       ))}

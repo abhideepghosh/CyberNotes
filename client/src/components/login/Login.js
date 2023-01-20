@@ -53,7 +53,6 @@ const Login = () => {
       setTimeout(() => {
         navigate("/loader");
       }, 500);
-    
       const requestOptions = {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -68,7 +67,9 @@ const Login = () => {
         console.log("success");
         data.token = "Bearer " + data.token;
         loginDetailsUpdate(data);
-        navigate("/home");
+        setTimeout(() => {
+          navigate("/home");
+        }, 2000);
       } else {
         userData.setValidLogin(false);
         navigate("/");
