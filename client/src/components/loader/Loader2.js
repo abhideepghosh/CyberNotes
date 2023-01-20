@@ -3,18 +3,18 @@ import "./Loader.css";
 
 const Loader2 = () =>  {
     const [word, setWord] = useState("");
-    var words = ['Creating Account','-------------->'],
+    var words2 = ['Creating Account','-------------->'],
     i = 0,
     offset = 0,
-    len = words.length,
+    len = words2.length,
     forwards = true,
     skip_count = 0,
     skip_delay = 15,
     speed = 90;
-var wordflick = function () {
+const wordflick = function () {
   setInterval(function () {
     if (forwards) {
-      if (offset >= words[i].length) {
+      if (offset >= words2[i].length) {
         ++skip_count;
         if (skip_count === skip_delay) {
           forwards = false;
@@ -32,7 +32,7 @@ var wordflick = function () {
         }
       }
     }
-    setWord(words[i].substring(0, offset));
+    setWord(words2[i].substring(0, offset));
     if (skip_count === 0) {
       if (forwards) {
         offset++;
@@ -43,10 +43,9 @@ var wordflick = function () {
     }
   },speed);
 };
-
     useEffect (()=>{
         wordflick();
-    },[])
+    })
 return (
     <div id="loader">
       <div className="word"><em>{word}</em></div>

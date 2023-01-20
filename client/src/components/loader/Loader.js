@@ -11,7 +11,7 @@ const Loader = () =>  {
     skip_count = 0,
     skip_delay = 15,
     speed = 90;
-var wordflick = function () {
+  const wordflick = function () {
   setInterval(function () {
     if (forwards) {
       if (offset >= words[i].length) {
@@ -46,7 +46,7 @@ var wordflick = function () {
 
     useEffect (()=>{
         wordflick();
-    },[])
+    })
 return (
     <div id="loader">
       <div className="word"><em>{word}</em></div>
