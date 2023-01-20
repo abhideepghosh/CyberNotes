@@ -9,6 +9,7 @@ import UserState from "./context/users/userState";
 
 import Settings from "./components/settings/Settings";
 import Workspace from "./components/workspace/Workspace";
+import Workspace2 from "./components/workspace/Workspace2";
 import Loader from "./components/loader/Loader";
 import Loader2 from "./components/loader/Loader2";
 function App() {
@@ -22,7 +23,8 @@ function App() {
             <Route path="/home" element={<Dashboard />} />
             <Route path="*" element={<ErrorPage />} />
             <Route path="/signup" element={<Signup />} />
-            <Route path="/home/workspace" element={<Workspace />} />
+            <Route path="/home/createNote" element={<Workspace />} />
+            <Route path="/home/updateNote" element={<Workspace2 />} />
             <Route path="/home/settings" element={<Settings />} />
             <Route path="/loader" element={<Loader />} />
             <Route path="/loader2" element={<Loader2 />} />

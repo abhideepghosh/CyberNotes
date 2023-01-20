@@ -198,13 +198,16 @@ const Dashboard = () => {
                 </div>
               </div>
               <div className="channel-feed__body">
+                {(filterNotes.length === 0) ?
+                  <div className="noNotes">Click here to create your <Link to="/home/createNote"><b>first note</b></Link></div> : ""
+                }
                 {allNotes.data &&
                   filterNotes.map((note, index) => (
                     <div className="message-container" key={index}>
                       <div className="message-nav">
-                        <button className="updateIcon" onClick={() => updateInput(index)}>
+                        <Link className="updateIcon" to="/home/updateNote" state={{ noteId: note._id , prevTitle: note.title , prevDescription : note.description }}>
                           <em>#Update</em>
-                        </button>
+                        </Link>
                         <button className="deleteIcon" onClick={() => openModalInput(index)}>
                           <em>#Delete</em>
                         </button>

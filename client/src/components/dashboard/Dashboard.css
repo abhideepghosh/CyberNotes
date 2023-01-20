@@ -582,6 +582,7 @@ textarea {
   border: none;
   background: none;
   cursor: pointer;
+  font-size: 15px;
 }
 .updateIcon {
   color: #2be4ea;
@@ -589,6 +590,7 @@ textarea {
   border: none;
   background: none;
   cursor: pointer;
+  font-size: 15px;
 }
 
  
@@ -683,4 +685,9 @@ textarea {
 }
 .close:after {
   transform: rotate(-45deg);
+}
+.noNotes{
+  text-align: center;
+  margin: 50px;
+  font-size: 20px;
 }

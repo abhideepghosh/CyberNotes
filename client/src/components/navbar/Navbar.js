@@ -47,7 +47,7 @@ const Navbar = () => {
 
   const FIXTURES = {
     headerMenu: [
-      { notificationCount: 0, text: "Create Note", url: "/home/workspace" },
+      { notificationCount: 0, text: "Create Note", url: "/home/createNote" },
       { notificationCount: 0, text: "All Notes", url: "/home" },
       { notificationCount: 0, text: "Settings", url: "/home/settings" },
       { notificationCount: 0, text: "Logout", url: "/" },
