@@ -4,7 +4,8 @@ const userController = require("./../controllers/userController");
 const router = express.Router();
 
 // Comment Out Before Deploying
-// router.get("/", userController.getAllUsers);
+
+router.get("/v1/users", userController.getAllUsers);
 
 router.post("/signup", authController.signup);
 router.post("/login", authController.login);

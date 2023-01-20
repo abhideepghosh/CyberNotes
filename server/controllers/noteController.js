@@ -3,7 +3,6 @@ const Note = require("../models/noteModel");
 exports.getAllUserNotes = async (req, res, next) => {
   try {
     const userId = req.params.userId;
-
     const userNote = await Note.find({ userId }).sort("-createdAt");
     res.status(200).json({
       status: "success",
@@ -95,7 +94,23 @@ exports.deleteNote = async (req, res, next) => {
 
 exports.deleteAllUserNote = async (userId) => {
   try {
+    await Note.deleteMany({ userId });  
+  } catch (err) {
+    res.status(401).json({
+      status: "fail",
+      message: err,
+    });
+  }
+};
+
+exports.deleteAllNotes = async (req, res, next) => {
+  try {
+    const userId = req.params.userId;
     await Note.deleteMany({ userId });
+    res.status(200).json({
+      status: 'success',
+      message: 'All Notes Deleted'
+    });  
   } catch (err) {
     res.status(401).json({
       status: "fail",

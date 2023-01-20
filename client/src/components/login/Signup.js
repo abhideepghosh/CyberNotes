@@ -25,7 +25,11 @@ const Signup = () => {
     formImage.style.height = document.body.scrollHeight + "px";
   };
   window.addEventListener("resize", resize);
-
+  const signupEnter = (e) =>{
+    if(e.key === "Enter"){
+      register();
+    }
+  }
   const nameInput = (e) => {
     setName(e.target.value);
   };
@@ -58,6 +62,9 @@ const Signup = () => {
       const isValidAll =
         validName && validEmail && validPassword && validConfirmPassword;
       if (isValidAll) {
+        setTimeout(() => {
+          navigate("/loader2");
+        }, 500);
         const requestOptions = {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -71,6 +78,7 @@ const Signup = () => {
         if (data.status === "success") navigate("/");
         else {
           setValidUniqueEmail(false);
+          navigate("/Signup");
           console.log(data.status);
         }
       } else {
@@ -195,6 +203,7 @@ const Signup = () => {
               value={confirmPassword}
               className="editor-field__input"
               onChange={confirmPasswordInput}
+              onKeyPress={signupEnter}
             />
           </div>
           <span className="editor-field__bottom "></span>

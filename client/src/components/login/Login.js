@@ -22,6 +22,11 @@ const Login = () => {
   };
   window.addEventListener("resize", resize);
 
+  const loginEnter = (e) =>{
+    if(e.key === "Enter"){
+      login();
+    }
+  }
   const usernameInput = (e) => {
     setUsername(e.target.value);
   };
@@ -47,8 +52,8 @@ const Login = () => {
       if(validCredentials){
       setTimeout(() => {
         navigate("/loader");
-      }, 1000);
-    }
+      }, 500);
+    
       const requestOptions = {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -69,6 +74,7 @@ const Login = () => {
         navigate("/");
         console.log("Invalid Email Or Password");
       }
+    }
     } catch (error) {
       console.log("Incorrect Username Or Password!");
     }
@@ -109,7 +115,7 @@ const Login = () => {
               value={username}
               className="editor-field__input "
               onChange={usernameInput}
-            />
+              />
           </div>
           <span className="editor-field__bottom"></span>
           <div className="editor-field__noise"></div>
@@ -136,6 +142,7 @@ const Login = () => {
               value={password}
               className="editor-field__input"
               onChange={passwordInput}
+              onKeyPress={loginEnter}
             />
           </div>
           <span className="editor-field__bottom "></span>

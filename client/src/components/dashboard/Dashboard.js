@@ -91,6 +91,7 @@ const Dashboard = () => {
   }
 
   const deleteNote = async() => {
+    try {
     if(deleteIndex !== ''){
       const { id } = userData.state.data.data;
       const { token } = userData.state.data;
@@ -124,8 +125,10 @@ const Dashboard = () => {
       setTimeout(() => {  
         setDeleteSuccess(false);
       }, 500);
-      
     }
+  } catch(err){
+    console.log("Note not deleted");
+  }
   };
 
   if (userData.state.data)

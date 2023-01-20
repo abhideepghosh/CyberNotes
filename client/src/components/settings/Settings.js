@@ -1,4 +1,5 @@
 import React, { useState , useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import "./Settings.scss";
 import UserContext from "../../context/users/userContext";
 
@@ -10,6 +11,7 @@ const Settings = () => {
   const userData = useContext(UserContext);
   const[deleteSuccess, setDeleteSuccess] = useState(false);
   const {id, name , email} = userData.state.data.data;
+  const navigate = useNavigate();
   const openModalInput = (index) =>{
     setOpenModal("display-block");
 }
@@ -34,12 +36,12 @@ const enableDeleteAllNotes = () => {
 const deleteUser =  async() =>{
      console.log("clicked Delete User");
      try {
-      
+      const { token } = userData.state.data;
       const requestOptions = {
         method: "DELETE",
-        headers: { "Authorization": userData.token,
+        headers: {
+           "Authorization": token,
         "Content-Type": "application/json", },
-        body: JSON.stringify({ id : id }),
       };
       const response = await fetch(
         `https://cybernotes-backend.onrender.com/v1/users/deleteUser/${id}`,
@@ -48,7 +50,8 @@ const deleteUser =  async() =>{
       const data = await response.json();
       if (data.status === "success") {
         setDeleteSuccess(true);
-        
+        userData.update({});
+        navigate("/");
         console.log("success");
       } 
       setTimeout(() => {  
@@ -60,6 +63,35 @@ const deleteUser =  async() =>{
 }
 const deleteAllNotes =  async() =>{
   console.log("clicked Delete All Notes");
+  try {
+    const { token } = userData.state.data;
+    console.log(token);
+    const requestOptions = {
+      method: "DELETE",
+      headers: {
+         "Authorization": token,
+      "Content-Type": "application/json", },
+    };
+    console.log(id);
+    const response = await fetch(
+      `https://cybernotes-backend.onrender.com/v1/notes/deleteAllNotes/${id}`,
+      requestOptions
+      );
+      console.log("here2");
+    const data = await response.json();
+    if (data.status === "success") {
+      setDeleteSuccess(true);
+      console.log("success");
+      navigate("/home");
+    }else{
+      console.log("fsil");
+    }
+    setTimeout(() => {  
+      setDeleteSuccess(false);
+    }, 500);
+  } catch (error) {
+    console.log("Account Notes Not Deleted");
+  }
 }
   return (
     <div>
@@ -94,6 +126,8 @@ const deleteAllNotes =  async() =>{
             <div className="settings-sections">
             <table>
               <caption><b>Profile Information</b></caption>
+              <tbody>
+
         <tr>
            <td>NetWire_Seed</td>
           <td> #{id}</td>
@@ -107,6 +141,7 @@ const deleteAllNotes =  async() =>{
           <td> {email}</td>
         </tr>
       
+            </tbody>
       </table>        
             </div>
             </div>
