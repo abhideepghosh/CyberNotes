@@ -52,7 +52,7 @@ const Login = () => {
       if(validCredentials){
       setTimeout(() => {
         navigate("/loader");
-      }, 500);
+      }, 1);
       const requestOptions = {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -69,7 +69,7 @@ const Login = () => {
         loginDetailsUpdate(data);
         setTimeout(() => {
           navigate("/home");
-        }, 2000);
+        }, 500);
       } else {
         userData.setValidLogin(false);
         navigate("/");
