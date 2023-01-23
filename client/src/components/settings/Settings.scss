@@ -52,7 +52,7 @@
 
 .sidebar button:focus  { 
   background: #461616;
-  color:  #2be4ea;
+  color:   var(--colors-secondary--500);
 }
 .sidebar button:focus >.angluar_tag{
   display: block;

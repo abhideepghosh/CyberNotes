@@ -1,10 +1,6 @@
 @import url("https://fonts.googleapis.com/css?family=IBM+Plex+Sans:400,700");
 
-*,
-*:before,
-*:after {
-  box-sizing: inherit;
-}
+
 #light {
   margin-left: -47px;
   position: relative;
@@ -592,30 +588,18 @@ $space-size-8: $space-size * 8;
       calc(0% + 8px) 100%,
       0% calc(100% - 8px),
       0% 20%
-    );
+      );
+    }
   }
-}
-
+  
+  em {
+    line-height: 2rem;
+  }
 //-------------------------------------------------------------------------
-:root {
-  --glitched-duration: 0.9s;
-  --glitched-long-duration: 3s;
-  --yellow-color: #f9f002;
-  --yellow-color-opacity: #f9f00242;
-  --orange-color: #ff9800;
-  --border-color: #8ae66e;
-  --red-color: #ff003c;
-  --blue-color: #136377;
-  --green-color: #446d44;
-  --purple-color: purple;
-}
 
-/* Titles */
-
-.cyberpunk1,
-.cyberpunk2,
-.cyberpunk3,
-.cyberpunk4 {
+  $glitched-duration: 0.9s;
+ 
+.cyberpunk2{
   font-size: 2rem;
   line-height: 2.2rem;
   font-weight: 200;
@@ -629,47 +613,18 @@ $space-size-8: $space-size * 8;
   font-weight: 300;
 }
 
-.cyberpunk3 {
-  font-size: 1.4rem;
-  line-height: 1.6rem;
-  font-weight: 500;
-}
 
-.cyberpunk4 {
-  font-size: 1rem;
-  line-height: 1.2rem;
-  font-weight: 700;
-}
 
-.cyberpunk1.glitched {
-  animation-name: h1glitched;
-  animation-duration: calc(var(--glitched-duration) * 1.4);
-  animation-iteration-count: infinite;
-  animation-timing-function: linear;
-}
 
 .cyberpunk2.glitched {
   animation-name: h1glitched;
-  animation-duration: calc(var(--glitched-duration) * 1.7);
+  animation-duration: calc(var($glitched-duration) * 1.7);
   animation-iteration-count: infinite;
   animation-direction: reverse;
   animation-timing-function: linear;
 }
 
-.cyberpunk3.glitched {
-  animation-name: h1glitched;
-  animation-duration: calc(var(--glitched-duration) * 1.1);
-  animation-iteration-count: infinite;
-  animation-direction: reverse;
-  animation-timing-function: ease-out;
-}
 
-.cyberpunk4.glitched {
-  animation-name: h1glitched;
-  animation-duration: calc(var(--glitched-duration) * 2.1);
-  animation-iteration-count: infinite;
-  animation-timing-function: ease-in-out;
-}
 
 @keyframes h1glitched {
   0% {
@@ -701,140 +656,9 @@ $space-size-8: $space-size * 8;
   }
 }
 
-.cyberpunk1.glitched:before {
-  animation-name: h1beforeglitched;
-  animation-duration: calc(var(--glitched-duration) * 2);
-  animation-iteration-count: infinite;
-  animation-timing-function: linear;
-}
 
-@keyframes h1beforeglitched {
-  0% {
-    transform: skew(-20deg);
-    left: -4px;
-    clip-path: polygon(
-      0px 0px,
-      85px 0px,
-      90px 5px,
-      100% 5px,
-      100% 6px,
-      85px 6px,
-      80px 10px,
-      0px 10px
-    );
-  }
-  10% {
-    transform: skew(-20deg);
-    left: -4px;
-    clip-path: polygon(
-      0px 0px,
-      85px 0px,
-      90px 5px,
-      100% 5px,
-      100% 6px,
-      85px 6px,
-      80px 10px,
-      0px 10px
-    );
-  }
-  11% {
-    transform: skew(0deg);
-    left: 2px;
-    clip-path: polygon(
-      0px 0px,
-      85px 0px,
-      90px 5px,
-      100% 5px,
-      100% 6px,
-      85px 6px,
-      80px 10px,
-      0px 10px
-    );
-  }
-  50% {
-    transform: skew(0deg);
-    clip-path: polygon(
-      0px 0px,
-      85px 0px,
-      90px 5px,
-      100% 5px,
-      100% 6px,
-      85px 6px,
-      80px 10px,
-      0px 10px
-    );
-  }
-  51% {
-    transform: skew(0deg);
-    clip-path: polygon(
-      0px 0px,
-      85px 0px,
-      90px 5px,
-      100% 5px,
-      40% 5px,
-      calc(40% - 30px) 0px,
-      calc(40% + 30px) 0px,
-      calc(45% - 15px) 5px,
-      100% 5px,
-      100% 6px,
-      calc(45% - 14px) 6px,
-      calc(40% + 29px) 1px,
-      calc(40% - 29px) 1px,
-      calc(40% + 1px) 6px,
-      85px 6px,
-      80px 10px,
-      0px 10px
-    );
-  }
-  59% {
-    transform: skew(0deg);
-    clip-path: polygon(
-      0px 0px,
-      85px 0px,
-      90px 5px,
-      100% 5px,
-      40% 5px,
-      calc(40% - 30px) 0px,
-      calc(40% + 30px) 0px,
-      calc(45% - 15px) 5px,
-      100% 5px,
-      100% 6px,
-      calc(45% - 14px) 6px,
-      calc(40% + 29px) 1px,
-      calc(40% - 29px) 1px,
-      calc(40% + 1px) 6px,
-      85px 6px,
-      80px 10px,
-      0px 10px
-    );
-  }
-  60% {
-    transform: skew(0deg);
-    clip-path: polygon(
-      0px 0px,
-      85px 0px,
-      90px 5px,
-      100% 5px,
-      100% 6px,
-      85px 6px,
-      80px 10px,
-      0px 10px
-    );
-  }
-  100% {
-    transform: skew(0deg);
-    clip-path: polygon(
-      0px 0px,
-      85px 0px,
-      90px 5px,
-      100% 5px,
-      100% 6px,
-      85px 6px,
-      80px 10px,
-      0px 10px
-    );
-  }
-}
+
+
 
 .cyberpunk2:before {
   clip-path: polygon(
@@ -855,7 +679,7 @@ $space-size-8: $space-size * 8;
 
 .cyberpunk2.glitched:before {
   animation-name: h2beforeglitched;
-  animation-duration: calc(var(--glitched-duration) * 2);
+  animation-duration: calc(var($glitched-duration) * 2);
   animation-iteration-count: infinite;
   animation-timing-function: linear;
 }
@@ -887,57 +711,17 @@ $space-size-8: $space-size * 8;
   }
 }
 
-.cyberpunk3:before {
-  clip-path: polygon(
-    0px 5px,
-    10px 5px,
-    15px 0px,
-    40px 0px,
-    45px 5px,
-    100% 5px,
-    100% 6px,
-    31px 6px,
-    27px 2px,
-    15px 2px,
-    8px 10px,
-    0px 10px
-  );
-}
 
-.cyberpunk4:before {
-  clip-path: polygon(
-    0px 3px,
-    15px 3px,
-    20px 0px,
-    80px 0px,
-    85px 3px,
-    100% 3px,
-    100% 4px,
-    85px 4px,
-    80px 7px,
-    20px 7px,
-    15px 4px,
-    0px 4px
-  );
-}
-
-.cyberpunk1:after,
 .cyberpunk2:after,
-.cyberpunk3:after,
-.cyberpunk4:after,
 p.cyberpunk:after {
   content: "_";
   animation-name: hxafter;
-  animation-duration: var(--glitched-duration);
+  animation-duration: var($glitched-duration);
   animation-iteration-count: infinite;
   animation-timing-function: linear;
 }
 
-.cyberpunk3:after,
-.cyberpunk4:after {
-  animation-direction: reverse;
-  animation-duration: calc(var(--glitched-duration) / 2);
-}
+
 
 @keyframes hxafter {
   0% {
@@ -954,14 +738,8 @@ p.cyberpunk:after {
   }
 }
 
-/* Separator */
 
 
-
-
-em {
-  line-height: 2rem;
-}
 
 .editor-field__input:-webkit-autofill,
 .editor-field__input:-webkit-autofill:hover, 
