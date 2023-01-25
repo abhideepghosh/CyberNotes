@@ -156,7 +156,7 @@ const Dashboard = () => {
               </div>
             </div>
 
-            <form className="form-search" >
+            <form className="form-search" onSubmit={(e) => {e.preventDefault()}}>
               <div className="form-group">
                 <div className="form-control form-control--with-addon">
                   <input name="query" placeholder="Search..." type="text" id="searchField" value={valueInput} onChange={(e) => {filterSearch(e.target.value)}}/>
