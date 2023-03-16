@@ -1,6 +1,5 @@
 # CYBERNOTES
 
-Project Built By Abhideep Ghosh And Swati Sharma.
 Site Live At: https://cyber-notes.netlify.app/
 
 ## Languages Used
