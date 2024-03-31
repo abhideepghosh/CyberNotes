@@ -1,6 +1,6 @@
 # CYBERNOTES
 
-Site Live At: https://cyber-notes.netlify.app/
+Site Live At: https://cyber-notes-eight.vercel.app/
 
 ## Languages Used
 
